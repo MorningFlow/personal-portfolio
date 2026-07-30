@@ -57,15 +57,13 @@
     let scatter = gsap.timeline({ defaults: { ease: 'power2.inOut', duration: 1 } });
     
     scatter
-      /* Names go straight up */
+      /* Names and Portrait go smoothly UP */
       .fromTo('.hero-fname',    { y: 0, opacity: 1 }, { y: '-100vh', opacity: 0 }, 0)
       .fromTo('.hero-lname',    { y: 0, opacity: 1 }, { y: '-100vh', opacity: 0 }, 0)
-      /* Portrait goes down and slightly left */
-      .fromTo('#portraitStage', { y: 0, x: 0, scale: 1, opacity: 1 }, { y: '30vh', x: '-20vw', scale: 0.6, opacity: 0 }, 0)
-      /* Bio goes down and slightly right */
-      .fromTo('.hero-bio',      { y: 0, x: 0, opacity: 1 }, { y: '30vh', x: '20vw', opacity: 0 }, 0)
-      /* Socials drop straight down */
-      .fromTo('.hero-socials',  { y: 0, opacity: 1 }, { y: '60vh', opacity: 0 }, 0)
+      .fromTo('#portraitStage', { y: 0, scale: 1, opacity: 1 }, { y: '-90vh', scale: 0.85, opacity: 0 }, 0)
+      /* Bio and Socials go smoothly DOWN */
+      .fromTo('.hero-bio',      { y: 0, opacity: 1 }, { y: '80vh', opacity: 0 }, 0)
+      .fromTo('.hero-socials',  { y: 0, opacity: 1 }, { y: '100vh', opacity: 0 }, 0)
       /* Statement emerges same as desktop */
       .to('.statement-text', { scale: 1, opacity: 1, ease: 'power2.out' }, 0.4)
       .fromTo('.statement .bg-word-inner', { x: '10vw', opacity: 0 }, { x: 0, opacity: 1, ease: 'none' }, 0.4)
