@@ -283,6 +283,17 @@
     });
   });
 
+  /* ── Smooth Scroll for "RR" Logo ────────────────────────────
+     Native anchor jumps to #top conflict with GSAP pin spacers.
+     We manually scroll the window to 0. */
+  var navMark = document.querySelector('.nav-mark');
+  if (navMark) {
+    navMark.addEventListener('click', function(e) {
+      e.preventDefault();
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    });
+  }
+
   /* Recalculate heights on window resize */
   window.addEventListener('resize', function () {
     document.querySelectorAll('.accordion-item.open .accordion-panel').forEach(function (panel) {
