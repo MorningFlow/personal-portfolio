@@ -125,7 +125,7 @@
         trigger: '.site-footer',
         start: 'top bottom',
         end: 'bottom bottom',
-        scrub: true
+        scrub: 2.5
       },
       y: '10%',
       ease: 'none'
