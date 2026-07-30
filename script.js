@@ -122,8 +122,8 @@
     { y: '100%' },
     {
       scrollTrigger: {
-        trigger: '.contact',
-        start: 'top 85%',
+        trigger: '.site-footer',
+        start: 'top bottom',
         end: 'bottom bottom',
         scrub: true
       },
