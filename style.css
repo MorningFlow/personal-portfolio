@@ -506,6 +506,22 @@ section { position: relative; overflow: hidden; }
     opacity: 1 !important;
     transform: none !important;
   }
+
+  /* Ensure CONTACT word in footer is fully visible and centered on mobile without getting cut off at the bottom */
+  .contact {
+    padding: 6rem 0 5rem;
+  }
+  .contact .bg-word {
+    top: 50% !important;
+    bottom: auto !important;
+    left: 50% !important;
+    transform: translate(-50%, -50%) !important;
+  }
+  .contact .bg-word-contact {
+    font-size: clamp(3.2rem, 16vw, 5.5rem) !important;
+    opacity: 0.08 !important;
+    transform: none !important;
+  }
 }
 .portrait-cutout {
   width: clamp(200px, 22vw, 300px);
@@ -990,11 +1006,27 @@ section { position: relative; overflow: hidden; }
     padding: 1rem 1.1rem;
   }
   .wc-split {
-    flex-direction: column;
+    flex-direction: row;
     gap: 0.75rem;
+    align-items: center;
   }
-  .wc-img-first .wc-vis-col,
-  .wc-txt-first .wc-vis-col { flex: 1 1 36%; order: 0; }
+  .wc-img-first .wc-vis-col {
+    flex: 1 1 44%;
+    order: -1;
+  }
+  .wc-img-first .wc-text-col {
+    flex: 1 1 56%;
+  }
+  .wc-txt-first .wc-text-col {
+    flex: 1 1 56%;
+  }
+  .wc-txt-first .wc-vis-col {
+    flex: 1 1 44%;
+    order: 1;
+  }
+  .wc-split .wc-text-col {
+    font-size: 0.82rem;
+  }
   .wc-stack .wc-sub { max-width: 100%; }
   .wc-big-num { font-size: clamp(3rem, 16vw, 5rem); }
   .wc-branch-row { flex-direction: column; }

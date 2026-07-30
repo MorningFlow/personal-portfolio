@@ -112,27 +112,33 @@
        4. After two rAF cycles, scroll to saved position so GSAP
           scrubs to the right state — and reverse works perfectly.
   ────────────────────────────────────────────────────────── */
-  if ('scrollRestoration' in history) {
-    history.scrollRestoration = 'manual';
-  }
+  if (window.innerWidth > 860) {
+    if ('scrollRestoration' in history) {
+      history.scrollRestoration = 'manual';
+    }
 
-  window.addEventListener('beforeunload', function () {
-    sessionStorage.setItem('gsap_scroll', window.scrollY);
-  });
-
-  var savedY = parseInt(sessionStorage.getItem('gsap_scroll') || '0', 10);
-  sessionStorage.removeItem('gsap_scroll');
-
-  if (savedY > 0) {
-    /* Two rAF cycles: first lets GSAP finish registering all
-       triggers and insert pin spacers; second lets the browser
-       paint before we move the scroll pointer. */
-    requestAnimationFrame(function () {
-      ScrollTrigger.refresh();
-      requestAnimationFrame(function () {
-        window.scrollTo({ top: savedY, behavior: 'instant' });
-      });
+    window.addEventListener('beforeunload', function () {
+      if (window.innerWidth > 860) {
+        sessionStorage.setItem('gsap_scroll', window.scrollY);
+      }
     });
+
+    var savedY = parseInt(sessionStorage.getItem('gsap_scroll') || '0', 10);
+    sessionStorage.removeItem('gsap_scroll');
+
+    if (savedY > 0) {
+      requestAnimationFrame(function () {
+        ScrollTrigger.refresh();
+        requestAnimationFrame(function () {
+          window.scrollTo({ top: savedY, behavior: 'instant' });
+        });
+      });
+    }
+  } else {
+    sessionStorage.removeItem('gsap_scroll');
+    if ('scrollRestoration' in history) {
+      history.scrollRestoration = 'auto';
+    }
   }
 
 })();
