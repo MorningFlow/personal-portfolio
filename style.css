@@ -511,7 +511,7 @@ section { position: relative; overflow: hidden; }
   }
   .contact .bg-word {
     top: auto !important;
-    bottom: 12% !important;
+    bottom: 0% !important;
     left: 50% !important;
     transform: translateX(-50%) !important;
     opacity: 0.05 !important;
