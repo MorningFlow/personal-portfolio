@@ -22,6 +22,7 @@
   }
 
   gsap.registerPlugin(ScrollTrigger);
+  ScrollTrigger.config({ ignoreMobileResize: true });
 
   /* ── Scatter + Surface timeline ──────────────────────────── */
   var scatter = gsap.timeline({ paused: true, defaults: { ease: 'power2.inOut', duration: 1 } });
