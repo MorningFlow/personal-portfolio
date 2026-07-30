@@ -39,15 +39,30 @@
     .fromTo('.statement .bg-word-inner', { x: '10vw', opacity: 0 }, { x: 0, opacity: 1, ease: 'none' }, 0.4)
     .to('.focus-list',     { scale: 1, opacity: 1, ease: 'power2.out' }, 0.6);
 
-  /* Pin the wrapper stack and scrub the timeline */
-  ScrollTrigger.create({
-    animation:     scatter,
-    trigger:       '.hero-statement-stack',
-    start:         'top top',
-    end:           '+=120%',
-    pin:           true,
-    scrub:         1.5,
-    invalidateOnRefresh: true,
+  /* Pin the wrapper stack on desktop only; allow natural scroll on mobile */
+  ScrollTrigger.matchMedia({
+    "(min-width: 861px)": function() {
+      ScrollTrigger.create({
+        animation:     scatter,
+        trigger:       '.hero-statement-stack',
+        start:         'top top',
+        end:           '+=120%',
+        pin:           true,
+        scrub:         1.5,
+        invalidateOnRefresh: true,
+      });
+    },
+    "(max-width: 860px)": function() {
+      ScrollTrigger.create({
+        animation:     scatter,
+        trigger:       '.hero-statement-stack',
+        start:         'top top',
+        end:           'bottom top',
+        pin:           false,
+        scrub:         1,
+        invalidateOnRefresh: true,
+      });
+    }
   });
 
   /* ── 2. Background Words Scroll Reveals ──────────────────── */
@@ -87,13 +102,13 @@
     ease: 'none'
   });
 
-  /* CONTACT: Slide in from bottom — fires near the very end of the page */
+  /* CONTACT: Slide in from bottom — triggers reliably when section enters viewport */
   gsap.from('.bg-word-contact', {
     scrollTrigger: {
       trigger: '.contact',
-      start: 'top 20%',
-      end: 'bottom bottom',
-      scrub: 2
+      start: 'top 85%',
+      end: 'bottom 85%',
+      scrub: 1.5
     },
     y: '50vh',
     ease: 'none'
@@ -425,6 +440,30 @@
         'perspective(700px) rotateX(' + (cy * -7).toFixed(2) + 'deg)' +
         ' rotateY(' + (cx *  7).toFixed(2) + 'deg) scale(1.018)';
     }, { passive: true });
+
+    /* — Touch events for mobile — */
+    var touchTimeout;
+    function handleTouch(e) {
+      if (!e.touches || !e.touches[0]) return;
+      var t = e.touches[0];
+      var rect = stage.getBoundingClientRect();
+      mx = ((t.clientX - rect.left) / rect.width  * 100).toFixed(2);
+      my = ((t.clientY - rect.top)  / rect.height * 100).toFixed(2);
+      vel = MAX_R - BASE_R;
+      hovering = true;
+      applyMask();
+      cancelAnimationFrame(raf);
+      raf = requestAnimationFrame(tick);
+      clearTimeout(touchTimeout);
+      touchTimeout = setTimeout(function() {
+        hovering = false;
+        vel = 0;
+        cancelAnimationFrame(raf);
+        raf = requestAnimationFrame(tick);
+      }, 2500);
+    }
+    stage.addEventListener('touchstart', handleTouch, { passive: true });
+    stage.addEventListener('touchmove',  handleTouch, { passive: true });
   })();
 
 })();
@@ -505,13 +544,20 @@
     if (nextBtn) nextBtn.addEventListener('click', function (e) { e.stopPropagation(); goTo((current + 1) % total); });
     if (prevBtn) prevBtn.addEventListener('click', function (e) { e.stopPropagation(); goTo((current - 1 + total) % total); });
 
-    var touchX = null;
-    track.addEventListener('touchstart', function (e) { touchX = e.touches[0].clientX; }, { passive: true });
+    var touchX = null, touchY = null;
+    track.addEventListener('touchstart', function (e) {
+      touchX = e.touches[0].clientX;
+      touchY = e.touches[0].clientY;
+    }, { passive: true });
     track.addEventListener('touchend', function (e) {
-      if (touchX === null) return;
+      if (touchX === null || touchY === null) return;
       var dx = e.changedTouches[0].clientX - touchX;
-      if (Math.abs(dx) > 40) goTo(dx < 0 ? (current + 1) % total : (current - 1 + total) % total);
+      var dy = e.changedTouches[0].clientY - touchY;
+      if (Math.abs(dx) > 40 && Math.abs(dx) > Math.abs(dy)) {
+        goTo(dx < 0 ? (current + 1) % total : (current - 1 + total) % total);
+      }
       touchX = null;
+      touchY = null;
     }, { passive: true });
   });
 })();
