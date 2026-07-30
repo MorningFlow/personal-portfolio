@@ -117,17 +117,20 @@
     ease: 'none'
   });
 
-  /* CONTACT: Slide in from bottom */
-  gsap.from('.bg-word-contact', {
-    scrollTrigger: {
-      trigger: '.contact',
-      start: 'top 85%',
-      end: 'bottom bottom',
-      scrub: true
-    },
-    y: '15vh',
-    ease: 'none'
-  });
+  /* CONTACT: Slide in from bottom (behind footer) */
+  gsap.fromTo('.bg-word-contact',
+    { y: '100%' },
+    {
+      scrollTrigger: {
+        trigger: '.contact',
+        start: 'top 85%',
+        end: 'bottom bottom',
+        scrub: true
+      },
+      y: '10%',
+      ease: 'none'
+    }
+  );
 
   /* ── Scroll position save/restore ───────────────────────────
      Problem: browser scroll-restore races with GSAP pin math.
