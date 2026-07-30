@@ -122,8 +122,8 @@
     scrollTrigger: {
       trigger: '.contact',
       start: 'top 95%',
-      end: 'bottom bottom',
-      scrub: 1.5
+      end: '75% bottom',
+      scrub: true
     },
     y: '30vh',
     ease: 'none'
