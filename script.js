@@ -25,30 +25,61 @@
   ScrollTrigger.config({ ignoreMobileResize: true });
 
   /* ── Scatter + Surface timeline ──────────────────────────── */
-  var scatter = gsap.timeline({ paused: true, defaults: { ease: 'power2.inOut', duration: 1 } });
+  let mm = gsap.matchMedia();
 
-  scatter
-    /* Hero elements scatter OUT — explicit fromTo ensures correct reverse */
-    .fromTo('.hero-fname',    { y: 0, opacity: 1 }, { y: '-110vh', opacity: 0 }, 0)
-    .fromTo('.hero-lname',    { y: 0, opacity: 1 }, { y: '-110vh', opacity: 0 }, 0)
-    .fromTo('.hero-bio',      { x: 0, opacity: 1 }, { x: '-95vw',  opacity: 0 }, 0)
-    .fromTo('.hero-socials',  { x: 0, opacity: 1 }, { x: '95vw',   opacity: 0 }, 0)
-    .fromTo('#portraitStage', { y: 0, scale: 1, opacity: 1 }, { y: '280px', scale: 0.55, opacity: 0 }, 0)
+  /* DESKTOP SCATTER */
+  mm.add("(min-width: 861px)", () => {
+    let scatter = gsap.timeline({ defaults: { ease: 'power2.inOut', duration: 1 } });
+    
+    scatter
+      .fromTo('.hero-fname',    { y: 0, opacity: 1 }, { y: '-110vh', opacity: 0 }, 0)
+      .fromTo('.hero-lname',    { y: 0, opacity: 1 }, { y: '-110vh', opacity: 0 }, 0)
+      .fromTo('.hero-bio',      { x: 0, opacity: 1 }, { x: '-95vw',  opacity: 0 }, 0)
+      .fromTo('.hero-socials',  { x: 0, opacity: 1 }, { x: '95vw',   opacity: 0 }, 0)
+      .fromTo('#portraitStage', { y: 0, scale: 1, opacity: 1 }, { y: '280px', scale: 0.55, opacity: 0 }, 0)
+      .to('.statement-text', { scale: 1, opacity: 1, ease: 'power2.out' }, 0.4)
+      .fromTo('.statement .bg-word-inner', { x: '10vw', opacity: 0 }, { x: 0, opacity: 1, ease: 'none' }, 0.4)
+      .to('.focus-list',     { scale: 1, opacity: 1, ease: 'power2.out' }, 0.6);
 
-    /* Statement elements emerge IN from center */
-    .to('.statement-text', { scale: 1, opacity: 1, ease: 'power2.out' }, 0.4)
-    .fromTo('.statement .bg-word-inner', { x: '10vw', opacity: 0 }, { x: 0, opacity: 1, ease: 'none' }, 0.4)
-    .to('.focus-list',     { scale: 1, opacity: 1, ease: 'power2.out' }, 0.6);
+    ScrollTrigger.create({
+      animation:     scatter,
+      trigger:       '.hero-statement-stack',
+      start:         'top top',
+      end:           '+=120%',
+      pin:           true,
+      scrub:         1.5,
+      invalidateOnRefresh: true,
+    });
+  });
 
-  /* Pin the wrapper stack and scrub the timeline on all screen sizes */
-  ScrollTrigger.create({
-    animation:     scatter,
-    trigger:       '.hero-statement-stack',
-    start:         'top top',
-    end:           '+=120%',
-    pin:           true,
-    scrub:         1.5,
-    invalidateOnRefresh: true,
+  /* MOBILE SCATTER (Custom Directions) */
+  mm.add("(max-width: 860px)", () => {
+    let scatter = gsap.timeline({ defaults: { ease: 'power2.inOut', duration: 1 } });
+    
+    scatter
+      /* Names go straight up */
+      .fromTo('.hero-fname',    { y: 0, opacity: 1 }, { y: '-100vh', opacity: 0 }, 0)
+      .fromTo('.hero-lname',    { y: 0, opacity: 1 }, { y: '-100vh', opacity: 0 }, 0)
+      /* Portrait goes down and slightly left */
+      .fromTo('#portraitStage', { y: 0, x: 0, scale: 1, opacity: 1 }, { y: '30vh', x: '-20vw', scale: 0.6, opacity: 0 }, 0)
+      /* Bio goes down and slightly right */
+      .fromTo('.hero-bio',      { y: 0, x: 0, opacity: 1 }, { y: '30vh', x: '20vw', opacity: 0 }, 0)
+      /* Socials drop straight down */
+      .fromTo('.hero-socials',  { y: 0, opacity: 1 }, { y: '60vh', opacity: 0 }, 0)
+      /* Statement emerges same as desktop */
+      .to('.statement-text', { scale: 1, opacity: 1, ease: 'power2.out' }, 0.4)
+      .fromTo('.statement .bg-word-inner', { x: '10vw', opacity: 0 }, { x: 0, opacity: 1, ease: 'none' }, 0.4)
+      .to('.focus-list',     { scale: 1, opacity: 1, ease: 'power2.out' }, 0.6);
+
+    ScrollTrigger.create({
+      animation:     scatter,
+      trigger:       '.hero-statement-stack',
+      start:         'top top',
+      end:           '+=120%',
+      pin:           true,
+      scrub:         1.5,
+      invalidateOnRefresh: true,
+    });
   });
 
   /* ── Background Words Scroll Reveals ──── */
