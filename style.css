@@ -505,19 +505,19 @@ section { position: relative; overflow: hidden; }
   .hero-socials a:hover { transform: none; }
   .scroll-cue { display: none; }
 
-  /* CONTACT word: perfectly centered vertically on mobile */
+  /* CONTACT word: positioned behind social links, spanning edge-to-edge on mobile */
   .contact {
     padding: 6rem 0 5rem;
   }
   .contact .bg-word {
-    top: 50% !important;
-    bottom: auto !important;
+    top: auto !important;
+    bottom: 12% !important;
     left: 50% !important;
-    transform: translate(-50%, -50%) !important;
+    transform: translateX(-50%) !important;
     opacity: 0.05 !important;
   }
   .contact .bg-word-contact {
-    font-size: clamp(3.2rem, 16vw, 5.5rem) !important;
+    font-size: 23vw !important;
   }
 }
 .portrait-cutout {
