@@ -24,7 +24,7 @@
   gsap.registerPlugin(ScrollTrigger);
 
   /* ── Scatter + Surface timeline ──────────────────────────── */
-  var scatter = gsap.timeline({ defaults: { ease: 'power2.inOut', duration: 1 } });
+  var scatter = gsap.timeline({ paused: true, defaults: { ease: 'power2.inOut', duration: 1 } });
 
   scatter
     /* Hero elements scatter OUT — explicit fromTo ensures correct reverse */
@@ -39,7 +39,9 @@
     .fromTo('.statement .bg-word-inner', { x: '10vw', opacity: 0 }, { x: 0, opacity: 1, ease: 'none' }, 0.4)
     .to('.focus-list',     { scale: 1, opacity: 1, ease: 'power2.out' }, 0.6);
 
-  /* Pin the wrapper stack and scrub the timeline on desktop only */
+  /* Pin the wrapper stack and scrub the timeline on desktop only.
+     The timeline is created paused — on mobile (no trigger), it stays
+     at its start state so hero elements remain fully visible. */
   ScrollTrigger.matchMedia({
     "(min-width: 861px)": function() {
       ScrollTrigger.create({
@@ -51,56 +53,56 @@
         scrub:         1.5,
         invalidateOnRefresh: true,
       });
+
+      /* ── Background Words Scroll Reveals (desktop only) ──── */
+      /* WORK: Slide in from left */
+      gsap.from('.bg-word-work', {
+        scrollTrigger: {
+          trigger: '.work',
+          start: 'top 90%',
+          end: 'top 40%',
+          scrub: 2
+        },
+        x: '-60vw',
+        ease: 'none'
+      });
+
+      /* SERVICES: Slide in from right */
+      gsap.from('.bg-word-services', {
+        scrollTrigger: {
+          trigger: '.services',
+          start: 'top 90%',
+          end: 'top 40%',
+          scrub: 2
+        },
+        x: '60vw',
+        ease: 'none'
+      });
+
+      /* BUILT: Slide in from left */
+      gsap.from('.bg-word-built', {
+        scrollTrigger: {
+          trigger: '.what-built',
+          start: 'top 90%',
+          end: 'top 40%',
+          scrub: 2
+        },
+        x: '-60vw',
+        ease: 'none'
+      });
+
+      /* CONTACT: Slide in from bottom */
+      gsap.from('.bg-word-contact', {
+        scrollTrigger: {
+          trigger: '.contact',
+          start: 'top 85%',
+          end: 'bottom 85%',
+          scrub: 1.5
+        },
+        y: '50vh',
+        ease: 'none'
+      });
     }
-  });
-
-  /* ── 2. Background Words Scroll Reveals ──────────────────── */
-  /* WORK: Slide in from left */
-  gsap.from('.bg-word-work', {
-    scrollTrigger: {
-      trigger: '.work',
-      start: 'top 90%',
-      end: 'top 40%',
-      scrub: 2
-    },
-    x: '-60vw',
-    ease: 'none'
-  });
-
-  /* SERVICES: Slide in from right */
-  gsap.from('.bg-word-services', {
-    scrollTrigger: {
-      trigger: '.services',
-      start: 'top 90%',
-      end: 'top 40%',
-      scrub: 2
-    },
-    x: '60vw',
-    ease: 'none'
-  });
-
-  /* BUILT: Slide in from left */
-  gsap.from('.bg-word-built', {
-    scrollTrigger: {
-      trigger: '.what-built',
-      start: 'top 90%',
-      end: 'top 40%',
-      scrub: 2
-    },
-    x: '-60vw',
-    ease: 'none'
-  });
-
-  /* CONTACT: Slide in from bottom — triggers reliably when section enters viewport */
-  gsap.from('.bg-word-contact', {
-    scrollTrigger: {
-      trigger: '.contact',
-      start: 'top 85%',
-      end: 'bottom 85%',
-      scrub: 1.5
-    },
-    y: '50vh',
-    ease: 'none'
   });
 
   /* ── Scroll position save/restore ───────────────────────────
@@ -444,7 +446,7 @@
       var rect = stage.getBoundingClientRect();
       mx = ((t.clientX - rect.left) / rect.width  * 100).toFixed(2);
       my = ((t.clientY - rect.top)  / rect.height * 100).toFixed(2);
-      vel = MAX_R - BASE_R;
+      vel = (MAX_R - BASE_R) * 0.5;
       hovering = true;
       applyMask();
       cancelAnimationFrame(raf);
