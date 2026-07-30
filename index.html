@@ -2,11 +2,860 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <meta http-equiv="refresh" content="0; url=./v2/index.html">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Rishikesh R | AI Automation & Dev Agency Founder</title>
-  <script>window.location.replace('./v2/index.html');</script>
+  <link rel="icon" type="image/svg+xml" href="favicon.svg">
+  <meta name="description" content="Portfolio of Rishikesh R — AI Automation & Full-Stack Engineer. I design and build AI agents, automation systems, and digital products end to end.">
+  <meta name="author" content="Rishikesh R">
+  <meta property="og:title" content="Rishikesh R | AI Automation & Dev">
+  <meta property="og:description" content="AI agents, automation systems, and full-stack products — designed and built end to end.">
+  <meta property="og:type" content="website">
+
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=Inter:wght@400;500;600&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet">
+
+  <link rel="stylesheet" href="style.css">
 </head>
-<body style="background: #F4F3EF; color: #141310; font-family: monospace; display: flex; align-items: center; justify-content: center; height: 100vh; margin: 0;">
-  <p>Redirecting to <a href="./v2/index.html" style="color: inherit;">Rishikesh R Portfolio</a>...</p>
+<body>
+
+  <div class="grain" aria-hidden="true"></div>
+
+  <!-- ============================================================
+       NAV
+       ============================================================ -->
+  <header class="nav-wrap">
+    <nav class="nav-pill" id="navPill" role="navigation" aria-label="Main navigation">
+      <a href="#top" class="nav-mark" aria-label="Rishikesh R — home">RR</a>
+      <div class="nav-links">
+        <a href="#work">Work</a>
+        <a href="#services">Services</a>
+        <a href="#built">Background</a>
+        <a href="#contact">Contact</a>
+      </div>
+      <a href="#contact" class="nav-cta">Get in touch <span class="arrow">↗</span></a>
+      <button class="nav-burger" id="navBurger" aria-label="Open menu" aria-expanded="false">
+        <span></span><span></span>
+      </button>
+    </nav>
+  </header>
+
+  <!-- Mobile overlay menu -->
+  <div class="menu-overlay" id="menuOverlay" role="dialog" aria-modal="true" aria-label="Navigation menu">
+    <button class="menu-close" id="menuClose" aria-label="Close menu">Close ✕</button>
+    <ul class="menu-links">
+      <li><a href="#work">Work</a></li>
+      <li><a href="#services">Services</a></li>
+      <li><a href="#built">Background</a></li>
+      <li><a href="#contact">Contact</a></li>
+    </ul>
+    <p class="menu-foot">rishikesh.xix@gmail.com</p>
+  </div>
+
+  <main id="top">
+
+    <!-- ============================================================
+         HERO & STATEMENT STACK
+         ============================================================ -->
+    <div class="hero-statement-stack">
+      <section class="hero" id="hero" aria-label="Introduction">
+
+      <!-- Centered name — outline first name + filled initial on same baseline -->
+      <h1 class="hero-name reveal in" style="--i:0">
+        <span class="hero-fname">RISHIKESH</span>&thinsp;<span class="hero-lname">R</span>
+      </h1>
+
+      <!-- Three-column body: bio | portrait | socials -->
+      <div class="hero-body reveal in" style="--i:2">
+
+        <!-- Left: Bio -->
+        <div class="hero-bio">
+          <p class="hero-role">AI Automation &amp;<br>Dev Founder</p>
+          <p class="hero-tagline">I build AI agents, automation systems, and full-stack products — end to end, from first conversation to live deployment.</p>
+          <div class="hero-status">
+            <span class="availability-dot" title="Open to projects"></span>
+            <span>Open to projects</span>
+            <span class="dot">·</span>
+            <span>Kerala, India</span>
+          </div>
+          <a href="#contact" class="hero-cta-btn">
+            Get in touch <span class="arrow">↗</span>
+          </a>
+        </div>
+
+        <!-- Center: Portrait — BW by default, color spotlight follows cursor -->
+        <div class="hero-portrait-stage" id="portraitStage">
+          <!-- Color layer underneath -->
+          <img src="Colored professional headshot.png"
+               class="photo-color"
+               alt=""
+               aria-hidden="true"
+               loading="eager"
+               draggable="false">
+          <!-- Grayscale layer on top, masked on hover to reveal color -->
+          <img src="Colored professional headshot.png"
+               class="photo-bw"
+               alt="Rishikesh R"
+               id="photoBW"
+               loading="eager"
+               draggable="false">
+        </div>
+
+        <nav class="hero-socials" aria-label="Social links">
+          <a href="https://x.com/itsrishi_ai" target="_blank" rel="noopener noreferrer" aria-label="X / Twitter profile">
+            <svg viewBox="0 0 24 24" fill="currentColor" width="15" height="15"><path d="M18.901 1.153h3.68l-8.04 9.19L24 22.846h-7.406l-5.8-7.584-6.638 7.584H.474l8.6-9.83L0 1.154h7.594l5.243 6.932ZM17.61 20.644h2.039L6.486 3.24H4.298Z"/></svg>
+            X
+          </a>
+          <a href="https://www.instagram.com/itsrishi.ai/" target="_blank" rel="noopener noreferrer" aria-label="Instagram profile">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="15" height="15"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"></line></svg>
+            Instagram
+          </a>
+          <a href="https://www.linkedin.com/in/rishikeshr/" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn profile">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="15" height="15"><rect x="2" y="2" width="20" height="20" rx="4" ry="4"></rect><path d="M8 11v5"></path><path d="M8 8v.01"></path><path d="M12 16v-5"></path><path d="M16 16v-3a2 2 0 0 0-4 0"></path></svg>
+            LinkedIn
+          </a>
+          <a href="https://www.youtube.com/@RishikeshAutomates" target="_blank" rel="noopener noreferrer" aria-label="YouTube channel">
+            <svg viewBox="0 0 24 24" fill="currentColor" width="15" height="15"><path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/></svg>
+            YouTube
+          </a>
+        </nav>
+      </div>
+
+      <a href="#statement" class="scroll-cue" aria-label="Scroll to next section"><span></span></a>
+    </section>
+
+    <!-- ============================================================
+         STATEMENT
+         ============================================================ -->
+    <section class="statement" id="statement" aria-label="About">
+      <span class="bg-word" style="top:6%; right:-6%; transform:rotate(4deg);" aria-hidden="true">
+        <span class="bg-word-inner" style="display: block;">FOCUS</span>
+      </span>
+      <div class="section-inner statement-grid">
+        <p class="statement-text">
+          I sit at the intersection of product thinking and systems engineering.
+          Not just code — but the full picture: understand the problem,
+          design the solution, build the product, ship it, and make it
+          run without constant attention.
+        </p>
+        <ul class="focus-list">
+          <li>AI Agents</li>
+          <li>Automation Systems</li>
+          <li>Full-Stack Development</li>
+          <li>End-to-End Delivery</li>
+        </ul>
+      </div>
+    </section>
+    </div> <!-- /hero-statement-stack -->
+
+    <!-- ============================================================
+         TOOLS MARQUEE
+         ============================================================ -->
+    <section class="tools-marquee" aria-label="Tools and technologies">
+      <div class="marquee-track">
+        <div class="marquee-row" aria-hidden="true">
+          <div class="marquee-inner">
+            <span class="marquee-item">n8n</span>
+            <span class="marquee-sep">·</span>
+            <span class="marquee-item">Make.com</span>
+            <span class="marquee-sep">·</span>
+            <span class="marquee-item">Zapier</span>
+            <span class="marquee-sep">·</span>
+            <span class="marquee-item">OpenAI</span>
+            <span class="marquee-sep">·</span>
+            <span class="marquee-item">Gemini</span>
+            <span class="marquee-sep">·</span>
+            <span class="marquee-item">Antigravity</span>
+            <span class="marquee-sep">·</span>
+            <span class="marquee-item">Firebase</span>
+            <span class="marquee-sep">·</span>
+            <span class="marquee-item">Airtable</span>
+            <span class="marquee-sep">·</span>
+            <span class="marquee-item">SQL</span>
+            <span class="marquee-sep">·</span>
+            <span class="marquee-item">REST API</span>
+            <span class="marquee-sep">·</span>
+            <span class="marquee-item">Webhooks</span>
+            <span class="marquee-sep">·</span>
+            <span class="marquee-item">Instagram API</span>
+            <span class="marquee-sep">·</span>
+            <span class="marquee-item">WhatsApp API</span>
+            <span class="marquee-sep">·</span>
+            <span class="marquee-item">Google Calendar</span>
+            <span class="marquee-sep">·</span>
+            <span class="marquee-item">HubSpot</span>
+            <span class="marquee-sep">·</span>
+            <span class="marquee-item">Docker</span>
+            <span class="marquee-sep">·</span>
+            <span class="marquee-item">GitHub</span>
+            <span class="marquee-sep">·</span>
+            <!-- duplicate for seamless loop -->
+            <span class="marquee-item">n8n</span>
+            <span class="marquee-sep">·</span>
+            <span class="marquee-item">Make.com</span>
+            <span class="marquee-sep">·</span>
+            <span class="marquee-item">Zapier</span>
+            <span class="marquee-sep">·</span>
+            <span class="marquee-item">OpenAI</span>
+            <span class="marquee-sep">·</span>
+            <span class="marquee-item">Gemini</span>
+            <span class="marquee-sep">·</span>
+            <span class="marquee-item">Antigravity</span>
+            <span class="marquee-sep">·</span>
+            <span class="marquee-item">Firebase</span>
+            <span class="marquee-sep">·</span>
+            <span class="marquee-item">Airtable</span>
+            <span class="marquee-sep">·</span>
+            <span class="marquee-item">SQL</span>
+            <span class="marquee-sep">·</span>
+            <span class="marquee-item">REST API</span>
+            <span class="marquee-sep">·</span>
+            <span class="marquee-item">Webhooks</span>
+            <span class="marquee-sep">·</span>
+            <span class="marquee-item">Instagram API</span>
+            <span class="marquee-sep">·</span>
+            <span class="marquee-item">WhatsApp API</span>
+            <span class="marquee-sep">·</span>
+            <span class="marquee-item">Google Calendar</span>
+            <span class="marquee-sep">·</span>
+            <span class="marquee-item">HubSpot</span>
+            <span class="marquee-sep">·</span>
+            <span class="marquee-item">Docker</span>
+            <span class="marquee-sep">·</span>
+            <span class="marquee-item">GitHub</span>
+            <span class="marquee-sep">·</span>
+          </div>
+        </div>
+        <div class="marquee-row marquee-row--reverse" aria-hidden="true">
+          <div class="marquee-inner">
+            <span class="marquee-item">GitHub</span>
+            <span class="marquee-sep">·</span>
+            <span class="marquee-item">Docker</span>
+            <span class="marquee-sep">·</span>
+            <span class="marquee-item">HubSpot</span>
+            <span class="marquee-sep">·</span>
+            <span class="marquee-item">Google Calendar</span>
+            <span class="marquee-sep">·</span>
+            <span class="marquee-item">WhatsApp API</span>
+            <span class="marquee-sep">·</span>
+            <span class="marquee-item">Instagram API</span>
+            <span class="marquee-sep">·</span>
+            <span class="marquee-item">Webhooks</span>
+            <span class="marquee-sep">·</span>
+            <span class="marquee-item">REST API</span>
+            <span class="marquee-sep">·</span>
+            <span class="marquee-item">SQL</span>
+            <span class="marquee-sep">·</span>
+            <span class="marquee-item">Airtable</span>
+            <span class="marquee-sep">·</span>
+            <span class="marquee-item">Firebase</span>
+            <span class="marquee-sep">·</span>
+            <span class="marquee-item">Antigravity</span>
+            <span class="marquee-sep">·</span>
+            <span class="marquee-item">Gemini</span>
+            <span class="marquee-sep">·</span>
+            <span class="marquee-item">OpenAI</span>
+            <span class="marquee-sep">·</span>
+            <span class="marquee-item">Zapier</span>
+            <span class="marquee-sep">·</span>
+            <span class="marquee-item">Make.com</span>
+            <span class="marquee-sep">·</span>
+            <span class="marquee-item">n8n</span>
+            <span class="marquee-sep">·</span>
+            <!-- duplicate -->
+            <span class="marquee-item">GitHub</span>
+            <span class="marquee-sep">·</span>
+            <span class="marquee-item">Docker</span>
+            <span class="marquee-sep">·</span>
+            <span class="marquee-item">HubSpot</span>
+            <span class="marquee-sep">·</span>
+            <span class="marquee-item">Google Calendar</span>
+            <span class="marquee-sep">·</span>
+            <span class="marquee-item">WhatsApp API</span>
+            <span class="marquee-sep">·</span>
+            <span class="marquee-item">Instagram API</span>
+            <span class="marquee-sep">·</span>
+            <span class="marquee-item">Webhooks</span>
+            <span class="marquee-sep">·</span>
+            <span class="marquee-item">REST API</span>
+            <span class="marquee-sep">·</span>
+            <span class="marquee-item">SQL</span>
+            <span class="marquee-sep">·</span>
+            <span class="marquee-item">Airtable</span>
+            <span class="marquee-sep">·</span>
+            <span class="marquee-item">Firebase</span>
+            <span class="marquee-sep">·</span>
+            <span class="marquee-item">Antigravity</span>
+            <span class="marquee-sep">·</span>
+            <span class="marquee-item">Gemini</span>
+            <span class="marquee-sep">·</span>
+            <span class="marquee-item">OpenAI</span>
+            <span class="marquee-sep">·</span>
+            <span class="marquee-item">Zapier</span>
+            <span class="marquee-sep">·</span>
+            <span class="marquee-item">Make.com</span>
+            <span class="marquee-sep">·</span>
+            <span class="marquee-item">n8n</span>
+            <span class="marquee-sep">·</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============================================================
+         FEATURED WORK
+         ============================================================ -->
+    <section class="work" id="work" aria-labelledby="work-heading">
+      <span class="bg-word" style="top:2%; left:-3%;" aria-hidden="true">
+        <span class="bg-word-inner bg-word-work" style="display: block;">WORK</span>
+      </span>
+      <div class="section-inner">
+        <div class="section-head">
+          <p class="eyebrow reveal" style="--i:0">Selected Work</p>
+          <h2 class="section-title reveal" id="work-heading" style="--i:1">Four projects,<br>chosen carefully.</h2>
+        </div>
+
+        <div class="work-grid">
+
+          <!-- Card 1: AI Instagram Booking Agent -->
+          <article class="work-card reveal" style="--i:0; --wc-accent:#c49a6c; --wc-accent-soft:#e8d5c0;">
+            <div class="media">
+              <div class="wc-track" id="wc-track-1">
+                <!-- 01 Cover -->
+                <div class="wc-slide wc-bg-accent" data-wc="1">
+                  <div class="wc-topbar"><span class="wc-eyebrow">Project: Automation</span><span class="wc-counter">01 / 07</span></div>
+                  <div class="wc-body wc-stack"><div class="wc-headline">I built an Instagram inbox that books its own appointments.</div><div class="wc-sub">AI Appointment Booking Agent. Instagram DM automation.</div></div>
+                </div>
+                <!-- 02 The Problem -->
+                <div class="wc-slide wc-bg-soft" data-wc="1">
+                  <div class="wc-topbar"><span class="wc-eyebrow">The Problem</span><span class="wc-counter">02 / 07</span></div>
+                  <div class="wc-body wc-split wc-txt-first">
+                    <div class="wc-text-col"><div class="wc-headline-sm">Every DM answered by hand. Every reply a delay.</div><div class="wc-sub-sm">Manual replies to booking inquiries consumed hours daily and slowed response time for a service business fielding customers through Instagram.</div></div>
+                    <div class="wc-vis-col"><img src="corousals/1.instagram dm automation/assets/inbox.png" alt="Crowded Instagram DM inbox" loading="lazy"></div>
+                  </div>
+                </div>
+                <!-- 03 The Solution -->
+                <div class="wc-slide wc-bg-paper" data-wc="1">
+                  <div class="wc-topbar"><span class="wc-eyebrow">The Approach</span><span class="wc-counter">03 / 07</span></div>
+                  <div class="wc-body wc-stack"><div class="wc-headline">An AI trained to sound like a person, not a bot.</div><div class="wc-sub">Personality modeled from real conversation history, so every reply matched the owner's actual tone.</div></div>
+                </div>
+                <!-- 04 What I Built -->
+                <div class="wc-slide wc-bg-soft" data-wc="1">
+                  <div class="wc-topbar"><span class="wc-eyebrow">System</span><span class="wc-counter">04 / 07</span></div>
+                  <div class="wc-body wc-split wc-img-first">
+                    <div class="wc-vis-col"><img src="corousals/1.instagram dm automation/assets/dm_conversation.png" alt="AI DM conversation booking an appointment" loading="lazy"></div>
+                    <div class="wc-text-col"><ul class="wc-list"><li>DM automation</li><li>Conversational AI</li><li>Personality modeling</li><li>Calendar booking</li><li>FAQ handling</li></ul><div class="wc-sub-sm">Instagram API, n8n, and an LLM, wired end to end.</div></div>
+                  </div>
+                </div>
+                <!-- 05 The Hard Part -->
+                <div class="wc-slide wc-bg-paper" data-wc="1">
+                  <div class="wc-topbar"><span class="wc-eyebrow">The Challenge</span><span class="wc-counter">05 / 07</span></div>
+                  <div class="wc-body wc-sequence">
+                    <div class="wc-seq-row"><div class="wc-seq-step"><span class="wc-seq-num">1</span><span class="wc-seq-lbl">Collect</span></div><div class="wc-seq-step"><span class="wc-seq-num">2</span><span class="wc-seq-lbl">Analyze</span></div><div class="wc-seq-step"><span class="wc-seq-num">3</span><span class="wc-seq-lbl">Profile</span></div><div class="wc-seq-step"><span class="wc-seq-num">4</span><span class="wc-seq-lbl">Engineer</span></div><div class="wc-seq-step"><span class="wc-seq-num">5</span><span class="wc-seq-lbl">Refine</span></div></div>
+                    <div class="wc-seq-quote">"Sounding human took five iterations, not one prompt."</div>
+                  </div>
+                </div>
+                <!-- 06 Outcome -->
+                <div class="wc-slide wc-bg-accent" data-wc="1">
+                  <div class="wc-topbar"><span class="wc-eyebrow">Result</span><span class="wc-counter">06 / 07</span></div>
+                  <div class="wc-body wc-outcome">
+                    <div class="wc-outcome-vis"><img src="corousals/1.instagram dm automation/assets/calendar.png" alt="Auto-booked appointments calendar" loading="lazy"></div>
+                    <div class="wc-outcome-body"><div class="wc-headline-sm">No more manual replies. The inbox runs itself.</div><div class="wc-sub-sm">Appointments book themselves. The voice stays personal.</div><span class="wc-pill">Live in production</span></div>
+                  </div>
+                </div>
+                <!-- 07 Try It -->
+                <div class="wc-slide wc-bg-soft" data-wc="1">
+                  <div class="wc-topbar"><span class="wc-eyebrow">Live Demo</span><span class="wc-counter">07 / 07</span></div>
+                  <div class="wc-body wc-stack"><div class="wc-headline">Message it yourself.</div><div class="wc-sub">A live version of this agent runs on Instagram. Send "hi" to start.</div></div>
+                </div>
+              </div>
+              <div class="wc-controls" id="wc-ctrl-1" aria-label="Carousel controls">
+                <div class="wc-dots" id="wc-dots-1"></div>
+                <div class="wc-arrows"><button class="wc-arrow" data-wc-prev="1" aria-label="Previous slide">&larr;</button><button class="wc-arrow" data-wc-next="1" aria-label="Next slide">&rarr;</button></div>
+              </div>
+              <span class="card-demo-badge">◉ Live demo <span class="cta-arrow">↗</span></span>
+            </div>
+            <div class="work-meta">
+              <h3>AI Instagram Booking Agent</h3>
+              <p class="tag">AI Agent · Salon, UK — 2025</p>
+              <p class="desc">
+                An AI agent that handles every customer DM, qualifies inquiries, and books
+                salon appointments automatically — trained to sound exactly like the owner,
+                not a bot.
+              </p>
+              <a
+                href="https://ig.me/m/mytaskengine"
+                class="card-cta"
+                target="_blank"
+                rel="noopener noreferrer"
+                aria-label="Try the AI booking agent live demo on Instagram"
+              >Try the live demo <span class="cta-arrow">↗</span></a>
+              <span class="cta-hint">Send "hi" on Instagram to start</span>
+            </div>
+          </article>
+
+          <!-- Card 2: Sahadar Shield -->
+          <article class="work-card reveal" style="--i:1; --wc-accent:#6e98c8; --wc-accent-soft:#c0cfe8;">
+            <div class="media">
+              <div class="wc-track" id="wc-track-2">
+                <!-- 01 Cover -->
+                <div class="wc-slide wc-bg-accent" data-wc="2">
+                  <div class="wc-topbar"><span class="wc-eyebrow">Project: Ecosystem</span><span class="wc-counter">01 / 07</span></div>
+                  <div class="wc-body wc-stack"><div class="wc-headline">I built the membership system behind 300+ pharmacies.</div><div class="wc-sub">Sahadar Shield. Membership, credits, and discounts, unified across one ecosystem.</div></div>
+                </div>
+                <!-- 02 The Scale -->
+                <div class="wc-slide wc-bg-paper" data-wc="2">
+                  <div class="wc-topbar"><span class="wc-eyebrow">The Scale</span><span class="wc-counter">02 / 07</span></div>
+                  <div class="wc-body wc-hero-num"><div class="wc-big-num">300+</div><div class="wc-big-num-sub">Partner medical stores running one shared discount program, with no unified system behind it.</div></div>
+                </div>
+                <!-- 03 The Problem -->
+                <div class="wc-slide wc-bg-soft" data-wc="2">
+                  <div class="wc-topbar"><span class="wc-eyebrow">The Problem</span><span class="wc-counter">03 / 07</span></div>
+                  <div class="wc-body wc-stack"><div class="wc-headline">Members, staff, and credits tracked without a system.</div><div class="wc-sub">No consistent way to verify a customer, manage a membership, or move credits across hundreds of locations.</div></div>
+                </div>
+                <!-- 04 The Solution -->
+                <div class="wc-slide wc-bg-paper" data-wc="2">
+                  <div class="wc-topbar"><span class="wc-eyebrow">The Approach</span><span class="wc-counter">04 / 07</span></div>
+                  <div class="wc-body wc-split wc-img-first">
+                    <div class="wc-vis-col"><img src="corousals/2.sahakar 300+/customer-app-home-membership-card.png" alt="Sahadar Shield customer app membership card" loading="lazy"></div>
+                    <div class="wc-text-col"><div class="wc-headline-sm">One ecosystem. Four applications.</div><ul class="wc-list"><li>Customer app</li><li>Customer portal</li><li>Staff dashboard</li><li>Admin dashboard</li></ul></div>
+                  </div>
+                </div>
+                <!-- 05 Customer Journey -->
+                <div class="wc-slide wc-bg-soft" data-wc="2">
+                  <div class="wc-topbar"><span class="wc-eyebrow">The Journey</span><span class="wc-counter">05 / 07</span></div>
+                  <div class="wc-body wc-split wc-txt-first">
+                    <div class="wc-text-col">
+                      <div class="wc-seq-row"><div class="wc-seq-step"><span class="wc-seq-num">1</span><span class="wc-seq-lbl">Register</span></div><div class="wc-seq-step"><span class="wc-seq-num">2</span><span class="wc-seq-lbl">Verify</span></div><div class="wc-seq-step"><span class="wc-seq-num">3</span><span class="wc-seq-lbl">Visit</span></div><div class="wc-seq-step"><span class="wc-seq-num">4</span><span class="wc-seq-lbl">Redeem</span></div></div>
+                      <div class="wc-sub-sm">"One phone number in. One membership card out. One ID that works in any store."</div>
+                    </div>
+                    <div class="wc-vis-col"><img src="corousals/2.sahakar 300+/staff-qr-member-verification.png" alt="Staff QR member verification" loading="lazy"></div>
+                  </div>
+                </div>
+                <!-- 06 The Hard Part -->
+                <div class="wc-slide wc-bg-paper" data-wc="2">
+                  <div class="wc-topbar"><span class="wc-eyebrow">The Challenge</span><span class="wc-counter">06 / 07</span></div>
+                  <div class="wc-body wc-split wc-img-first">
+                    <div class="wc-vis-col"><img src="corousals/2.sahakar 300+/staff-portal-login.png" alt="Staff portal login with branch selector" loading="lazy"></div>
+                    <div class="wc-text-col"><div class="wc-headline-sm">One backend. Three different roles.</div><div class="wc-sub-sm">Role-based permissions, branch-level access, and dual authentication all had to hold together without conflict, across every login path.</div></div>
+                  </div>
+                </div>
+                <!-- 07 Outcome -->
+                <div class="wc-slide wc-bg-accent" data-wc="2">
+                  <div class="wc-topbar"><span class="wc-eyebrow">Result</span><span class="wc-counter">07 / 07</span></div>
+                  <div class="wc-body wc-outcome">
+                    <div class="wc-outcome-vis"><img src="corousals/2.sahakar 300+/admin-dashboard-overview.png" alt="Admin dashboard overview" loading="lazy"></div>
+                    <div class="wc-outcome-body"><div class="wc-headline-sm">The largest system in the portfolio, running quietly in the background.</div><div class="wc-sub-sm">Customers, staff, and admins on one platform, across every partner store.</div><span class="wc-pill">4 Platforms. 1 Ecosystem.</span></div>
+                  </div>
+                </div>
+              </div>
+              <div class="wc-controls" id="wc-ctrl-2" aria-label="Carousel controls">
+                <div class="wc-dots" id="wc-dots-2"></div>
+                <div class="wc-arrows"><button class="wc-arrow" data-wc-prev="2" aria-label="Previous slide">&larr;</button><button class="wc-arrow" data-wc-next="2" aria-label="Next slide">&rarr;</button></div>
+              </div>
+            </div>
+            <div class="work-meta">
+              <h3>Sahadar Shield Ecosystem</h3>
+              <p class="tag">Full-Stack · Mobile · Firebase — 2024</p>
+              <p class="desc">
+                A complete membership platform — customer mobile app, staff dashboard, and
+                admin system — managing digital cards, credits, and discounts across 300+
+                partner medical stores.
+              </p>
+            </div>
+          </article>
+
+          <!-- Card 3: AI Customer Feedback System -->
+          <article class="work-card reveal" style="--i:2; --wc-accent:#5dab78; --wc-accent-soft:#c0e8cc;">
+            <div class="media">
+              <div class="wc-track" id="wc-track-3">
+                <!-- 01 Cover -->
+                <div class="wc-slide wc-bg-accent" data-wc="3">
+                  <div class="wc-topbar"><span class="wc-eyebrow">Project: Automation</span><span class="wc-counter">01 / 07</span></div>
+                  <div class="wc-body wc-stack"><div class="wc-headline">I built a system that turns happy customers into public reviews — automatically.</div><div class="wc-sub">AI Customer Feedback &amp; Reputation System. WhatsApp automation.</div></div>
+                </div>
+                <!-- 02 The Problem -->
+                <div class="wc-slide wc-bg-paper" data-wc="3">
+                  <div class="wc-topbar"><span class="wc-eyebrow">The Problem</span><span class="wc-counter">02 / 07</span></div>
+                  <div class="wc-body wc-stack"><div class="wc-headline">Happy customers leave. Unhappy ones leave reviews.</div><div class="wc-sub">No way to reach satisfied customers after the sale — while dissatisfied ones went straight to Google.</div></div>
+                </div>
+                <!-- 03 The Insight -->
+                <div class="wc-slide wc-bg-soft" data-wc="3">
+                  <div class="wc-topbar"><span class="wc-eyebrow">The Insight</span><span class="wc-counter">03 / 07</span></div>
+                  <div class="wc-body wc-stack"><div class="wc-headline">More public praise. Fewer public complaints.</div><div class="wc-sub">Route satisfied customers to Google Reviews. Catch dissatisfied ones privately. The logic is simple. The timing is everything.</div></div>
+                </div>
+                <!-- 04 The Customer Flow -->
+                <div class="wc-slide wc-bg-paper" data-wc="3">
+                  <div class="wc-topbar"><span class="wc-eyebrow">The Flow</span><span class="wc-counter">04 / 07</span></div>
+                  <div class="wc-body wc-split wc-img-first">
+                    <div class="wc-vis-col"><img src="corousals/3.feedback and reputation system/whatsapp-invoice-feedback-flow.png" alt="WhatsApp invoice + feedback star rating" loading="lazy"></div>
+                    <div class="wc-text-col"><div class="wc-headline-sm">Invoice first. Feedback second.</div><div class="wc-sub-sm">Every purchase triggers a WhatsApp message delivering the invoice. A follow-up asks for a star rating — at the moment attention is highest.</div></div>
+                  </div>
+                </div>
+                <!-- 05 The Logic -->
+                <div class="wc-slide wc-bg-soft" data-wc="3">
+                  <div class="wc-topbar"><span class="wc-eyebrow">The Logic</span><span class="wc-counter">05 / 07</span></div>
+                  <div class="wc-body wc-branch">
+                    <div class="wc-branch-trigger">Customer rates their experience</div>
+                    <div class="wc-branch-row">
+                      <div class="wc-arm arm-good"><div class="wc-arm-lbl">4 – 5 stars</div><div class="wc-arm-action">→ Google Reviews</div><div class="wc-arm-desc">Direct link to leave a public review while the experience is fresh.</div></div>
+                      <div class="wc-arm"><div class="wc-arm-lbl">1 – 3 stars</div><div class="wc-arm-action">→ Private capture</div><div class="wc-arm-desc">Feedback stays internal. Business can resolve — not broadcast.</div></div>
+                    </div>
+                  </div>
+                </div>
+                <!-- 06 The Hard Part -->
+                <div class="wc-slide wc-bg-paper" data-wc="3">
+                  <div class="wc-topbar"><span class="wc-eyebrow">The Challenge</span><span class="wc-counter">06 / 07</span></div>
+                  <div class="wc-body wc-stack"><div class="wc-headline">The billing software didn't have a webhook.</div><div class="wc-sub">The trigger had to be built manually — intercepting the invoice event and passing it into the WhatsApp sequence without a native integration.</div></div>
+                </div>
+                <!-- 07 Outcome -->
+                <div class="wc-slide wc-bg-accent" data-wc="3">
+                  <div class="wc-topbar"><span class="wc-eyebrow">Result</span><span class="wc-counter">07 / 07</span></div>
+                  <div class="wc-body wc-outcome">
+                    <div class="wc-outcome-vis"><img src="corousals/3.feedback and reputation system/google-reviews-4point6-stars-131-reviews.png" alt="Google Reviews 4.6 stars, 131 reviews" loading="lazy"></div>
+                    <div class="wc-outcome-body"><div class="wc-headline-sm">More public praise. Fewer public complaints.</div><div class="wc-sub-sm">Positive reviews increased. Dissatisfied customers caught privately. Zero extra staff effort.</div><span class="wc-pill">Zero staff effort</span></div>
+                  </div>
+                </div>
+              </div>
+              <div class="wc-controls" id="wc-ctrl-3" aria-label="Carousel controls">
+                <div class="wc-dots" id="wc-dots-3"></div>
+                <div class="wc-arrows"><button class="wc-arrow" data-wc-prev="3" aria-label="Previous slide">&larr;</button><button class="wc-arrow" data-wc-next="3" aria-label="Next slide">&rarr;</button></div>
+              </div>
+            </div>
+            <div class="work-meta">
+              <h3>AI Customer Feedback System</h3>
+              <p class="tag">AI Automation · JK Tyres — 2024</p>
+              <p class="desc">
+                Post-purchase WhatsApp automation that routes 5-star customers to Google Reviews
+                while capturing all other feedback privately — growing reputation without
+                a single manual step.
+              </p>
+            </div>
+          </article>
+
+          <!-- Card 4: Cold Email Infrastructure -->
+          <article class="work-card reveal" style="--i:3; --wc-accent:#9a75c8; --wc-accent-soft:#d4c0e8;">
+            <div class="media">
+              <div class="wc-track" id="wc-track-4">
+                <!-- 01 Cover -->
+                <div class="wc-slide wc-bg-accent" data-wc="4">
+                  <div class="wc-topbar"><span class="wc-eyebrow">Project: Infrastructure</span><span class="wc-counter">01 / 07</span></div>
+                  <div class="wc-body wc-stack"><div class="wc-headline">I built the infrastructure to send thousands of emails without getting flagged as spam.</div><div class="wc-sub">Cold email infrastructure and outreach automation.</div></div>
+                </div>
+                <!-- 02 The Problem -->
+                <div class="wc-slide wc-bg-paper" data-wc="4">
+                  <div class="wc-topbar"><span class="wc-eyebrow">The Problem</span><span class="wc-counter">02 / 07</span></div>
+                  <div class="wc-body wc-stack"><div class="wc-headline">A large lead list. One email sent at a time.</div><div class="wc-sub">Outreach was manual and slow — sending in bulk without infrastructure risked landing every email in spam.</div></div>
+                </div>
+                <!-- 03 The Insight -->
+                <div class="wc-slide wc-bg-soft" data-wc="4">
+                  <div class="wc-topbar"><span class="wc-eyebrow">The Insight</span><span class="wc-counter">03 / 07</span></div>
+                  <div class="wc-body wc-stack"><div class="wc-headline">Volume isn't the hard part. Deliverability is.</div><div class="wc-sub">Sending thousands of emails is trivial. Getting them into inboxes instead of spam folders is the actual engineering problem.</div></div>
+                </div>
+                <!-- 04 What I Built -->
+                <div class="wc-slide wc-bg-paper" data-wc="4">
+                  <div class="wc-topbar"><span class="wc-eyebrow">System</span><span class="wc-counter">04 / 07</span></div>
+                  <div class="wc-body wc-split wc-img-first">
+                    <div class="wc-vis-col"><img src="corousals/4.cold mail infra/local-senders-multi-domain-warmup.png" alt="Local senders multi-domain warmup panel" loading="lazy"></div>
+                    <div class="wc-text-col"><ul class="wc-list"><li>Domain strategy</li><li>SPF, DKIM, DMARC</li><li>Warm-up infrastructure</li><li>Bounce protection</li><li>Volume ramp-up</li></ul><div class="wc-sub-sm">Multiple sending domains, authenticated and warmed before a single campaign email went out.</div></div>
+                  </div>
+                </div>
+                <!-- 05 The Personalization -->
+                <div class="wc-slide wc-bg-soft" data-wc="4">
+                  <div class="wc-topbar"><span class="wc-eyebrow">The Personalization</span><span class="wc-counter">05 / 07</span></div>
+                  <div class="wc-body wc-split wc-txt-first">
+                    <div class="wc-text-col"><div class="wc-headline-sm">Every email reads like it was written for one person.</div><div class="wc-sub-sm">First name, company, job title, and custom variables pulled straight from a CSV list — so campaigns never felt like a mail merge.</div></div>
+                    <div class="wc-vis-col"><img src="corousals/4.cold mail infra/global-activity-personalized-delivery-log.png" alt="Personalized email delivery log" loading="lazy"></div>
+                  </div>
+                </div>
+                <!-- 06 The Architecture -->
+                <div class="wc-slide wc-bg-paper" data-wc="4">
+                  <div class="wc-topbar"><span class="wc-eyebrow">The Sequence</span><span class="wc-counter">06 / 07</span></div>
+                  <div class="wc-body wc-sequence">
+                    <div class="wc-seq-row"><div class="wc-seq-step"><span class="wc-seq-num">1</span><span class="wc-seq-lbl">Open</span></div><div class="wc-seq-step"><span class="wc-seq-num">2</span><span class="wc-seq-lbl">Follow up</span></div><div class="wc-seq-step"><span class="wc-seq-num">3</span><span class="wc-seq-lbl">Follow up</span></div><div class="wc-seq-step"><span class="wc-seq-num">4</span><span class="wc-seq-lbl">Follow up</span></div><div class="wc-seq-step"><span class="wc-seq-num">5</span><span class="wc-seq-lbl">Break-up</span></div></div>
+                    <div class="wc-seq-quote">"A five-email sequence, ending in a deliberate goodbye — not a fade-out."</div>
+                  </div>
+                </div>
+                <!-- 07 Outcome -->
+                <div class="wc-slide wc-bg-accent" data-wc="4">
+                  <div class="wc-topbar"><span class="wc-eyebrow">Result</span><span class="wc-counter">07 / 07</span></div>
+                  <div class="wc-body wc-outcome">
+                    <div class="wc-outcome-vis"><img src="corousals/4.cold mail infra/campaigns-dashboard-metrics.png" alt="Campaigns dashboard: 326 sent, 582 leads, 9.5% open rate" loading="lazy"></div>
+                    <div class="wc-outcome-body"><div class="wc-headline-sm">From one-by-one to thousands, without losing the inbox.</div><div class="wc-sub-sm">Manual outreach became a scalable system sending high-volume personalized campaigns with strong inbox placement.</div><span class="wc-pill">Safe at scale</span></div>
+                  </div>
+                </div>
+              </div>
+              <div class="wc-controls" id="wc-ctrl-4" aria-label="Carousel controls">
+                <div class="wc-dots" id="wc-dots-4"></div>
+                <div class="wc-arrows"><button class="wc-arrow" data-wc-prev="4" aria-label="Previous slide">&larr;</button><button class="wc-arrow" data-wc-next="4" aria-label="Next slide">&rarr;</button></div>
+              </div>
+            </div>
+            <div class="work-meta">
+              <h3>Cold Email Infrastructure</h3>
+              <p class="tag">Infrastructure · Outreach — 2024</p>
+              <p class="desc">
+                A scalable outbound email system with domain warmup, SPF/DKIM/DMARC auth,
+                and CSV-based personalization — turning manual one-by-one sends into
+                thousands of clean, deliverable emails.
+              </p>
+            </div>
+          </article>
+
+        </div>
+      </div>
+    </section>
+
+    <!-- ============================================================
+         SUPPORTING PROJECTS
+         ============================================================ -->
+    <section class="supporting" id="other-work" aria-labelledby="supporting-heading">
+      <div class="section-inner">
+        <div class="supporting-head reveal" style="--i:0">
+          <h2 id="supporting-heading">Other things I've built</h2>
+        </div>
+
+        <div class="supporting-grid">
+
+          <div class="sup-card reveal" style="--i:0">
+            <p class="sup-card-type">AI Agent</p>
+            <h3>AI Website Chatbot</h3>
+            <p>A 24/7 support bot embedded on a client's website — handles FAQs, answers product questions, and guides visitors toward the right action, all without human input.</p>
+          </div>
+
+          <div class="sup-card reveal" style="--i:1">
+            <p class="sup-card-type">Web · Healthcare</p>
+            <h3>AMMAPSYDAC</h3>
+            <p>Full website and donation platform for a physiotherapy charity — responsive design, service pages, team profiles, and integrated payment system.</p>
+            <a href="https://www.ammapsydac.com/" class="sup-card-link" target="_blank" rel="noopener noreferrer">Visit site ↗</a>
+          </div>
+
+          <div class="sup-card reveal" style="--i:2">
+            <p class="sup-card-type">Web · Agency</p>
+            <h3>MyTaskEngine.com</h3>
+            <p>Official website for my AI automation and development agency — services, positioning, and project showcases.</p>
+            <a href="https://www.mytaskengine.com/" class="sup-card-link" target="_blank" rel="noopener noreferrer">Visit site <span class="cta-arrow">↗</span></a>
+          </div>
+
+          <div class="sup-card reveal" style="--i:3">
+            <p class="sup-card-type">Automation</p>
+            <h3>Business Onboarding Flow</h3>
+            <p>Auto-provisions a Google Drive folder, organises documents, adds legal paperwork, and sends a welcome email the moment a client submits an onboarding form.</p>
+          </div>
+
+          <div class="sup-card reveal" style="--i:4">
+            <p class="sup-card-type">Mobile App · Android</p>
+            <h3>Telos</h3>
+            <p>A habit-tracking and journaling app built around deep daily reflection — not streaks. Shipped solo from concept to Play Store.</p>
+            <a href="https://play.google.com/store/apps/details?id=com.alrawi.telos" class="sup-card-link" target="_blank" rel="noopener noreferrer">▶ Google Play <span class="cta-arrow">↗</span></a>
+          </div>
+
+          <div class="sup-card reveal" style="--i:5">
+            <p class="sup-card-type">Mobile App · Android</p>
+            <h3>Entheos</h3>
+            <p>A comparative spiritual learning app for exploring mystical traditions from around the world — each presented in its own words, without bias.</p>
+            <a href="https://play.google.com/store/apps/details?id=com.alrawi.entheos" class="sup-card-link" target="_blank" rel="noopener noreferrer">▶ Google Play <span class="cta-arrow">↗</span></a>
+          </div>
+
+        </div>
+      </div>
+    </section>
+
+    <!-- ============================================================
+         SERVICES — accordion (2 items)
+         ============================================================ -->
+    <section class="services" id="services" aria-labelledby="services-heading">
+      <span class="bg-word" style="top:4%; right:-5%;" aria-hidden="true">
+        <span class="bg-word-inner bg-word-services" style="display: block;">SERVICES</span>
+      </span>
+      <div class="section-inner">
+        <div class="section-head">
+          <h2 class="section-title reveal" id="services-heading" style="--i:1">What I do,<br>in two parts.</h2>
+        </div>
+
+        <div class="accordion" role="list">
+
+          <div class="accordion-item open reveal" style="--i:0" role="listitem">
+            <button
+              class="accordion-header"
+              aria-expanded="true"
+              aria-controls="panel-services-1"
+              id="btn-services-1"
+            >
+              <span class="acc-index" aria-hidden="true">01</span>
+              <span class="acc-title">AI Agents & Automation</span>
+              <span class="acc-icon" aria-hidden="true"></span>
+            </button>
+            <div class="accordion-panel" id="panel-services-1" role="region" aria-labelledby="btn-services-1">
+              <div class="accordion-panel-inner">
+                <p>
+                  I design and build AI-powered agents and automation workflows that handle
+                  the repetitive, time-consuming parts of running a business. From Instagram
+                  DM handlers and website chatbots to WhatsApp post-purchase flows and
+                  cold email infrastructure — everything is built around the specific business
+                  problem, not a template.
+                </p>
+                <div class="tag-row">
+                  <span>AI Agents</span>
+                  <span>n8n / Make</span>
+                  <span>WhatsApp API</span>
+                  <span>Instagram API</span>
+                  <span>Email Automation</span>
+                  <span>Webhook Flows</span>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="accordion-item reveal" style="--i:1" role="listitem">
+            <button
+              class="accordion-header"
+              aria-expanded="false"
+              aria-controls="panel-services-2"
+              id="btn-services-2"
+            >
+              <span class="acc-index" aria-hidden="true">02</span>
+              <span class="acc-title">Development & Products</span>
+              <span class="acc-icon" aria-hidden="true"></span>
+            </button>
+            <div class="accordion-panel" id="panel-services-2" role="region" aria-labelledby="btn-services-2">
+              <div class="accordion-panel-inner">
+                <p>
+                  Full-stack applications, mobile apps, and web products built from concept to
+                  deployment. Firebase backends, authentication systems, admin dashboards,
+                  customer portals, and e-commerce stores — built alone or alongside a client,
+                  shipped to production, then iterated based on real usage.
+                </p>
+                <div class="tag-row">
+                  <span>React / Next.js</span>
+                  <span>Firebase</span>
+                  <span>Supabase</span>
+                  <span>Mobile (Android)</span>
+                  <span>Dashboards</span>
+                  <span>End-to-End Deployment</span>
+                </div>
+              </div>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </section>
+
+    <!-- ============================================================
+         WHAT I'VE BUILT (replacing Experience)
+         ============================================================ -->
+    <section class="what-built" id="built" aria-labelledby="built-heading">
+      <span class="bg-word" style="top:3%; left:-4%;" aria-hidden="true">
+        <span class="bg-word-inner bg-word-built" style="display: block;">BUILT</span>
+      </span>
+      <div class="section-inner">
+        <div class="section-head">
+          <p class="eyebrow reveal" style="--i:0">Background</p>
+          <h2 class="section-title reveal" id="built-heading" style="--i:1">What I've built.</h2>
+        </div>
+
+        <div class="built-list">
+
+          <div class="built-row reveal" style="--i:0">
+            <div class="built-main">
+              <h3>MyTaskEngine</h3>
+              <p>Founder & Lead Builder</p>
+            </div>
+            <p class="built-desc">
+              Running a solo AI automation and development agency. Building and delivering
+              client projects across AI agents, automation systems, full-stack apps,
+              and mobile products — from first conversation to live deployment.
+              <br>
+              <a href="https://www.mytaskengine.com/" class="built-badge" target="_blank" rel="noopener noreferrer">mytaskengine.com <span class="cta-arrow">↗</span></a>
+            </p>
+            <span class="built-year">2026 — Present</span>
+          </div>
+
+          <div class="built-row reveal" style="--i:1">
+            <div class="built-main">
+              <h3>Telos</h3>
+              <p>Solo Product · Google Play</p>
+            </div>
+            <p class="built-desc">
+              Designed and built a habit-tracking and journaling app from scratch — concept,
+              UI design, development, and Play Store launch. Built around deep reflection
+              rather than surface-level streak gamification.
+              <br>
+              <a href="https://play.google.com/store/apps/details?id=com.alrawi.telos" class="built-badge" target="_blank" rel="noopener noreferrer">● Live on Google Play <span class="cta-arrow">↗</span></a>
+            </p>
+            <span class="built-year">2025</span>
+          </div>
+
+          <div class="built-row reveal" style="--i:2">
+            <div class="built-main">
+              <h3>Entheos</h3>
+              <p>Solo Product · Google Play</p>
+            </div>
+            <p class="built-desc">
+              Built a comparative spiritual learning app featuring tradition-specific
+              guided practices and educational content — presenting each tradition in
+              its own words, without bias or promotion.
+              <br>
+              <a href="https://play.google.com/store/apps/details?id=com.alrawi.entheos" class="built-badge" target="_blank" rel="noopener noreferrer">● Live on Google Play <span class="cta-arrow">↗</span></a>
+            </p>
+            <span class="built-year">2025</span>
+          </div>
+
+          <div class="built-row reveal" style="--i:3">
+            <div class="built-main">
+              <h3>Freelance</h3>
+              <p>Independent</p>
+            </div>
+            <p class="built-desc">
+              Web design, automation builds, and product work for independent clients
+              across healthcare, beauty, automotive, and retail — before formalising
+              as MyTaskEngine.
+            </p>
+            <span class="built-year">2023 — 2024</span>
+          </div>
+
+        </div>
+      </div>
+    </section>
+
+    <!-- ============================================================
+         CONTACT
+         ============================================================ -->
+    <section class="contact" id="contact" aria-labelledby="contact-heading">
+      <span class="bg-word" style="bottom:0%; left:50%; transform:translateX(-50%);" aria-hidden="true">
+        <span class="bg-word-inner bg-word-contact" style="display: block;">CONTACT</span>
+      </span>
+      <div class="section-inner contact-inner">
+        <h2 class="contact-title reveal" id="contact-heading" style="--i:1">
+          Let's build something<br>that works.
+        </h2>
+        <a
+          href="mailto:rishikesh.xix@gmail.com?subject=Hey%20Rishi%20from%20your%20portfolio"
+          class="big-link reveal"
+          style="--i:2"
+          aria-label="Send an email to Rishikesh"
+        >rishikesh.xix@gmail.com</a>
+        <nav class="social-row reveal" style="--i:3" aria-label="Social links">
+          <a href="https://www.linkedin.com/in/rishikeshr/" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn profile">LinkedIn</a>
+          <a href="https://x.com/itsrishi_ai" target="_blank" rel="noopener noreferrer" aria-label="X / Twitter profile">X</a>
+          <a href="https://www.instagram.com/itsrishi.ai/" target="_blank" rel="noopener noreferrer" aria-label="Instagram profile">Instagram</a>
+        </nav>
+      </div>
+    </section>
+
+  </main>
+
+  <footer class="site-footer">
+    <div class="section-inner footer-inner">
+      <p>© 2026 Rishikesh R. Built with care.</p>
+      <a href="#top" class="back-top">Back to top ↑</a>
+    </div>
+  </footer>
+
+  <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/gsap.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/ScrollTrigger.min.js"></script>
+  <script src="script.js"></script>
+
 </body>
 </html>
