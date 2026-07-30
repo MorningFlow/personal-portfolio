@@ -514,11 +514,10 @@ section { position: relative; overflow: hidden; }
     bottom: auto !important;
     left: 50% !important;
     transform: translate(-50%, -50%) !important;
+    opacity: 0.05 !important;
   }
   .contact .bg-word-contact {
     font-size: clamp(3.2rem, 16vw, 5.5rem) !important;
-    opacity: 0.08 !important;
-    transform: none !important;
   }
 }
 .portrait-cutout {

@@ -121,11 +121,11 @@
   gsap.from('.bg-word-contact', {
     scrollTrigger: {
       trigger: '.contact',
-      start: 'top 85%',
-      end: 'bottom 85%',
+      start: 'top 95%',
+      end: 'bottom bottom',
       scrub: 1.5
     },
-    y: '50vh',
+    y: '30vh',
     ease: 'none'
   });
 
