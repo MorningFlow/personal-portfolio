@@ -1,0 +1,891 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Kiran Vale — Design Engineer</title>
+<meta name="description" content="Portfolio of Kiran Vale — Design Engineer working across product design, brand and design systems.">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=Inter:wght@400;500;600&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet">
+
+<style>
+  /* ============================================================
+     TOKENS — this is the whole design system. Change values here
+     to re-skin the entire site (colours, radii, easing, spacing).
+     ============================================================ */
+  :root{
+    --paper:       #F4F3EF;
+    --paper-soft:  #EAE8E2;
+    --ink:         #141310;
+    --ink-70:      rgba(20,19,16,.72);
+    --ink-55:      rgba(20,19,16,.56);
+    --ink-40:      rgba(20,19,16,.40);
+    --ink-30:      rgba(20,19,16,.28);
+    --ink-12:      rgba(20,19,16,.12);
+    --ink-08:      rgba(20,19,16,.08);
+    --line:        rgba(20,19,16,.14);
+
+    --ease: cubic-bezier(0.22,1,0.36,1);
+
+    --radius-lg: 28px;
+    --radius-md: 20px;
+    --radius-sm: 12px;
+
+    --container: 1240px;
+
+    --font-display: 'Space Grotesk', sans-serif;
+    --font-body: 'Inter', sans-serif;
+    --font-mono: 'IBM Plex Mono', monospace;
+  }
+
+  /* ============================================================
+     RESET / BASE
+     ============================================================ */
+  *,*::before,*::after{ box-sizing:border-box; }
+  html{ scroll-behavior:smooth; }
+  body{
+    margin:0;
+    background:var(--paper);
+    color:var(--ink);
+    font-family:var(--font-body);
+    -webkit-font-smoothing:antialiased;
+    -moz-osx-font-smoothing:grayscale;
+    overflow-x:hidden;
+  }
+  a{ color:inherit; }
+  img{ max-width:100%; display:block; }
+  ul{ margin:0; padding:0; }
+  button{ font-family:inherit; }
+  :focus-visible{ outline:2px solid var(--ink); outline-offset:3px; border-radius:4px; }
+
+  /* subtle paper grain, fixed over everything, purely decorative */
+  .grain{
+    position:fixed; inset:0; z-index:999; pointer-events:none;
+    opacity:.035; mix-blend-mode:multiply;
+    background-image:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='180' height='180'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2' stitchTiles='stitch'/></filter><rect width='100%25' height='100%25' filter='url(%23n)'/></svg>");
+  }
+
+  .section-inner{
+    max-width:var(--container);
+    margin:0 auto;
+    padding:0 1.75rem;
+    position:relative;
+    z-index:1;
+  }
+
+  section{ position:relative; overflow:hidden; }
+
+  .eyebrow{
+    font-family:var(--font-mono);
+    font-size:.78rem;
+    text-transform:uppercase;
+    letter-spacing:.16em;
+    color:var(--ink-55);
+    margin:0 0 1rem;
+  }
+
+  .section-head{ max-width:640px; margin-bottom:4.5rem; }
+  .section-title{
+    font-family:var(--font-display);
+    font-weight:600;
+    font-size:clamp(2.1rem, 5vw, 3.75rem);
+    line-height:1.05;
+    letter-spacing:-.02em;
+    margin:0;
+  }
+
+  /* large low-opacity background words behind every section */
+  .bg-word{
+    position:absolute;
+    font-family:var(--font-display);
+    font-weight:700;
+    font-size:clamp(6rem, 21vw, 15.5rem);
+    line-height:1;
+    letter-spacing:-.03em;
+    color:var(--ink);
+    opacity:.045;
+    white-space:nowrap;
+    pointer-events:none;
+    user-select:none;
+    z-index:0;
+  }
+
+  /* ============================================================
+     REVEAL SYSTEM — opacity + translateY + scale + blur, staggered
+     via the --i custom property on each element.
+     ============================================================ */
+  .reveal{
+    opacity:0;
+    transform:translateY(46px) scale(.965);
+    filter:blur(7px);
+    transition:
+      opacity 1s var(--ease),
+      transform 1s var(--ease),
+      filter 1s var(--ease);
+    transition-delay: calc(var(--i, 0) * 90ms);
+    will-change:transform, opacity, filter;
+  }
+  .reveal.in{
+    opacity:1;
+    transform:none;
+    filter:blur(0px);
+  }
+
+  @media (prefers-reduced-motion: reduce){
+    .reveal{ transition:none !important; opacity:1 !important; transform:none !important; filter:none !important; }
+    .bg-word{ transform:none !important; }
+    html{ scroll-behavior:auto; }
+  }
+
+  /* ============================================================
+     NAV
+     ============================================================ */
+  .nav-wrap{ position:fixed; top:0; left:0; right:0; z-index:100; display:flex; justify-content:center; }
+  .nav-pill{
+    margin-top:1.25rem;
+    display:flex; align-items:center; gap:2rem;
+    padding:.55rem .6rem .55rem 1.25rem;
+    border-radius:999px;
+    background:rgba(244,243,239,.7);
+    backdrop-filter:blur(16px) saturate(140%);
+    -webkit-backdrop-filter:blur(16px) saturate(140%);
+    border:1px solid var(--ink-08);
+    box-shadow:0 10px 30px -14px rgba(20,19,16,.18);
+    transition: box-shadow .6s var(--ease), background .6s var(--ease);
+  }
+  .nav-pill.scrolled{
+    background:rgba(244,243,239,.9);
+    box-shadow:0 16px 40px -14px rgba(20,19,16,.24);
+  }
+  .nav-mark{
+    width:2.3rem; height:2.3rem; border-radius:50%;
+    background:var(--ink); color:var(--paper);
+    display:flex; align-items:center; justify-content:center;
+    font-family:var(--font-display); font-weight:700; font-size:.85rem;
+    text-decoration:none; flex-shrink:0;
+  }
+  .nav-links{ display:flex; gap:1.85rem; }
+  .nav-links a{
+    font-family:var(--font-mono); font-size:.76rem;
+    text-transform:uppercase; letter-spacing:.07em;
+    color:var(--ink-70); text-decoration:none;
+    transition:color .3s var(--ease);
+  }
+  .nav-links a:hover{ color:var(--ink); }
+  .nav-cta{
+    display:flex; align-items:center; gap:.4rem;
+    font-family:var(--font-mono); font-size:.76rem;
+    text-transform:uppercase; letter-spacing:.05em;
+    background:var(--ink); color:var(--paper);
+    padding:.65rem 1.15rem; border-radius:999px;
+    text-decoration:none;
+    transition:transform .5s var(--ease);
+  }
+  .nav-cta:hover{ transform:translateY(-2px); }
+  .nav-cta .arrow{ display:inline-block; transition:transform .5s var(--ease); }
+  .nav-cta:hover .arrow{ transform:translate(2px,-2px); }
+
+  .nav-burger{
+    display:none; width:2.3rem; height:2.3rem; border:none; background:none;
+    flex-direction:column; justify-content:center; align-items:center; gap:5px;
+    cursor:pointer;
+  }
+  .nav-burger span{
+    width:18px; height:1.5px; background:var(--ink);
+    transition:transform .45s var(--ease), opacity .3s var(--ease);
+  }
+  .nav-burger.open span:first-child{ transform:translateY(3.25px) rotate(45deg); }
+  .nav-burger.open span:last-child{ transform:translateY(-3.25px) rotate(-45deg); }
+
+  @media (max-width:860px){
+    .nav-links, .nav-cta{ display:none; }
+    .nav-burger{ display:flex; }
+  }
+
+  .menu-overlay{
+    position:fixed; inset:0; z-index:200;
+    background:var(--paper);
+    display:flex; flex-direction:column; justify-content:center;
+    padding:2rem 8vw;
+    transform:translateY(-100%);
+    transition:transform .7s var(--ease);
+  }
+  .menu-overlay.open{ transform:translateY(0); }
+  .menu-close{
+    position:absolute; top:1.6rem; right:7vw;
+    background:none; border:none; cursor:pointer;
+    font-family:var(--font-mono); font-size:.8rem;
+    text-transform:uppercase; letter-spacing:.08em; color:var(--ink-70);
+  }
+  .menu-links{ display:flex; flex-direction:column; gap:.75rem; }
+  .menu-links a{
+    font-family:var(--font-display); font-weight:600;
+    font-size:clamp(2.4rem, 11vw, 5rem);
+    letter-spacing:-.02em;
+    text-decoration:none; color:var(--ink);
+    transition:opacity .4s var(--ease), transform .4s var(--ease);
+  }
+  .menu-links a:hover{ opacity:.45; transform:translateX(12px); }
+  .menu-foot{ margin-top:3rem; font-family:var(--font-mono); font-size:.8rem; color:var(--ink-55); }
+
+  /* ============================================================
+     HERO
+     ============================================================ */
+  .hero{
+    min-height:100svh;
+    display:flex; flex-direction:column; align-items:center; justify-content:center;
+    padding:9rem 1.5rem 4rem;
+    text-align:center;
+  }
+  .hero-inner{ position:relative; z-index:1; display:flex; flex-direction:column; align-items:center; max-width:920px; }
+
+  .hero-type{ display:flex; flex-direction:column; align-items:center; }
+  .hero-line{
+    font-family:var(--font-display); font-weight:700;
+    font-size:clamp(3.6rem, 14vw, 11.5rem);
+    line-height:.92; letter-spacing:-.03em; margin:0;
+  }
+  .hero-line.outline{
+    color:transparent;
+    -webkit-text-stroke:1.4px var(--ink);
+    text-stroke:1.4px var(--ink);
+  }
+  .hero-line.fill{ color:var(--ink); position:relative; z-index:2; }
+
+  .portrait-wrap{ margin:clamp(-2.25rem,-3.6vw,-1.25rem) 0; position:relative; z-index:1; display:flex; flex-direction:column; align-items:center; }
+  .portrait-cutout{
+    width:clamp(210px, 24vw, 320px);
+    height:clamp(270px, 31vw, 400px);
+    border-radius:50% 50% 18% 18% / 58% 58% 14% 14%;
+    background:radial-gradient(120% 120% at 50% 18%, var(--paper-soft), var(--ink-08));
+    border:1px solid var(--ink-12);
+    box-shadow:0 45px 90px -35px rgba(20,19,16,.30);
+    display:flex; align-items:center; justify-content:center;
+    overflow:hidden; position:relative;
+  }
+  .portrait-mark{ width:56%; height:56%; color:var(--ink); opacity:.55; }
+  /* To use a real photo: delete the <svg class="portrait-mark"> and add
+     <img src="your-photo.jpg" class="portrait-photo"> in its place. */
+  .portrait-photo{ width:100%; height:100%; object-fit:cover; }
+  .fig-caption{
+    font-family:var(--font-mono); font-size:.65rem; letter-spacing:.1em;
+    text-transform:uppercase; color:var(--ink-40); margin-top:.65rem;
+  }
+
+  .hero-sub{
+    max-width:540px; font-size:1.05rem; line-height:1.7; color:var(--ink-70);
+    margin:2.1rem 0 1.35rem;
+  }
+  .hero-meta{
+    display:flex; align-items:center; gap:.75rem;
+    font-family:var(--font-mono); font-size:.76rem;
+    text-transform:uppercase; letter-spacing:.06em; color:var(--ink-55);
+  }
+  .hero-meta .dot{ opacity:.5; }
+
+  .scroll-cue{
+    position:absolute; bottom:2.4rem; left:50%; transform:translateX(-50%);
+    width:1px; height:52px; background:var(--ink-30); overflow:hidden;
+    text-decoration:none;
+  }
+  .scroll-cue span{
+    display:block; width:100%; height:30%; background:var(--ink);
+    animation:scrollcue 2.4s var(--ease) infinite;
+  }
+  @keyframes scrollcue{
+    0%{ transform:translateY(-120%); }
+    100%{ transform:translateY(340%); }
+  }
+  @media (prefers-reduced-motion: reduce){ .scroll-cue span{ animation:none; } }
+
+  /* ============================================================
+     STATEMENT
+     ============================================================ */
+  .statement{ padding:7rem 0; }
+  .statement-grid{
+    display:grid; grid-template-columns:1.4fr .6fr; gap:4rem; align-items:start;
+  }
+  .statement-text{
+    font-family:var(--font-display); font-weight:500;
+    font-size:clamp(1.5rem, 2.7vw, 2.15rem);
+    line-height:1.45; letter-spacing:-.01em; margin:0;
+  }
+  .focus-list{ list-style:none; }
+  .focus-list li{
+    font-family:var(--font-mono); font-size:.85rem;
+    text-transform:uppercase; letter-spacing:.06em; color:var(--ink-70);
+    padding:1.05rem 0; border-top:1px solid var(--line);
+  }
+  .focus-list li:last-child{ border-bottom:1px solid var(--line); }
+
+  @media (max-width:760px){
+    .statement-grid{ grid-template-columns:1fr; gap:2.5rem; }
+  }
+
+  /* ============================================================
+     WORK
+     ============================================================ */
+  .work{ padding:8rem 0; }
+  .work-grid{ display:grid; grid-template-columns:repeat(2, 1fr); gap:2.25rem; }
+  .work-card{
+    background:var(--paper-soft);
+    border:1px solid var(--ink-08);
+    border-radius:var(--radius-lg);
+    overflow:hidden;
+    transition:transform .7s var(--ease), box-shadow .7s var(--ease);
+  }
+  .work-card:hover{
+    transform:translateY(-10px);
+    box-shadow:0 34px 70px -28px rgba(20,19,16,.22);
+  }
+  .work-card .media{
+    aspect-ratio:4/3;
+    background:linear-gradient(155deg, var(--paper-soft), var(--paper));
+    display:flex; align-items:flex-end; padding:1.75rem;
+    position:relative; overflow:hidden;
+  }
+  .work-card .index{
+    font-family:var(--font-display); font-weight:700;
+    font-size:clamp(3.2rem, 7vw, 5.2rem); line-height:1;
+    color:transparent; -webkit-text-stroke:1px var(--ink-30);
+    transition:transform .8s var(--ease);
+  }
+  .work-card:hover .index{ transform:translateY(-6px) scale(1.06); }
+  .work-meta{ padding:1.6rem 1.85rem 1.9rem; }
+  .work-meta h3{
+    font-family:var(--font-display); font-weight:600; font-size:1.55rem; margin:0 0 .35rem;
+  }
+  .work-meta .tag{
+    font-family:var(--font-mono); font-size:.76rem; text-transform:uppercase;
+    letter-spacing:.05em; color:var(--ink-55); margin:0 0 .6rem;
+  }
+  .work-meta .desc{ font-size:.95rem; line-height:1.55; color:var(--ink-70); margin:0; }
+
+  @media (max-width:760px){
+    .work-grid{ grid-template-columns:1fr; }
+  }
+
+  /* ============================================================
+     SERVICES — accordion
+     ============================================================ */
+  .services{ padding:8rem 0; }
+  .accordion-item{ border-bottom:1px solid var(--line); }
+  .accordion-item:first-child{ border-top:1px solid var(--line); }
+  .accordion-header{
+    width:100%; display:flex; align-items:center; gap:1.5rem;
+    background:none; border:none; text-align:left; cursor:pointer;
+    padding:1.9rem 0; color:inherit;
+  }
+  .acc-index{
+    font-family:var(--font-mono); font-size:.8rem; color:var(--ink-40);
+    min-width:2.4rem;
+  }
+  .acc-title{
+    flex:1; font-family:var(--font-display); font-weight:600;
+    font-size:clamp(1.3rem, 2.6vw, 1.85rem); letter-spacing:-.01em;
+    transition:opacity .4s var(--ease);
+  }
+  .accordion-header:hover .acc-title{ opacity:.6; }
+  .acc-icon{ width:20px; height:20px; position:relative; flex-shrink:0; transition:transform .55s var(--ease); }
+  .acc-icon::before, .acc-icon::after{
+    content:''; position:absolute; background:var(--ink); transition:transform .5s var(--ease);
+  }
+  .acc-icon::before{ top:50%; left:0; width:100%; height:1.4px; transform:translateY(-50%); }
+  .acc-icon::after{ left:50%; top:0; height:100%; width:1.4px; transform:translateX(-50%); }
+  .accordion-item.open .acc-icon{ transform:rotate(45deg); }
+
+  .accordion-panel{ max-height:0; overflow:hidden; transition:max-height .65s var(--ease); }
+  .accordion-panel-inner{
+    padding:0 0 2.1rem calc(2.4rem + 1.5rem);
+    max-width:640px; color:var(--ink-70); font-size:.98rem; line-height:1.65;
+  }
+  .tag-row{ display:flex; gap:.6rem; flex-wrap:wrap; margin-top:1.1rem; }
+  .tag-row span{
+    font-family:var(--font-mono); font-size:.7rem; text-transform:uppercase;
+    letter-spacing:.06em; color:var(--ink-55);
+    padding:.4rem .85rem; border:1px solid var(--ink-12); border-radius:999px;
+  }
+  @media (max-width:600px){
+    .accordion-panel-inner{ padding-left:0; }
+  }
+
+  /* ============================================================
+     EXPERIENCE
+     ============================================================ */
+  .experience{ padding:8rem 0; }
+  .exp-list{ }
+  .exp-row{
+    display:grid; grid-template-columns:1.1fr 1.6fr auto;
+    gap:2rem; align-items:center;
+    padding:1.85rem 0; border-top:1px solid var(--line);
+    transition:transform .5s var(--ease), background .5s var(--ease);
+  }
+  .exp-list .exp-row:last-child{ border-bottom:1px solid var(--line); }
+  .exp-row:hover{ transform:translateX(8px); }
+  .exp-main h3{ font-family:var(--font-display); font-weight:600; font-size:1.3rem; margin:0 0 .3rem; }
+  .exp-main p{ font-family:var(--font-mono); font-size:.8rem; text-transform:uppercase; letter-spacing:.05em; color:var(--ink-55); margin:0; }
+  .exp-desc{ font-size:.95rem; line-height:1.6; color:var(--ink-70); margin:0; }
+  .exp-date{ font-family:var(--font-mono); font-size:.8rem; color:var(--ink-40); white-space:nowrap; justify-self:end; }
+
+  @media (max-width:760px){
+    .exp-row{ grid-template-columns:1fr; gap:.6rem; }
+    .exp-date{ justify-self:start; }
+  }
+
+  /* ============================================================
+     CONTACT
+     ============================================================ */
+  .contact{ padding:9rem 0 6rem; }
+  .contact-inner{ text-align:center; display:flex; flex-direction:column; align-items:center; }
+  .contact-title{
+    font-family:var(--font-display); font-weight:600;
+    font-size:clamp(2.2rem, 6vw, 4.1rem); line-height:1.08; letter-spacing:-.02em; margin:0;
+  }
+  .big-link{
+    font-family:var(--font-display); font-weight:600;
+    font-size:clamp(1.7rem, 5.2vw, 3.1rem);
+    display:inline-block; margin:2.1rem 0 1.6rem;
+    text-decoration:none; color:var(--ink);
+    background-image:linear-gradient(var(--ink), var(--ink));
+    background-repeat:no-repeat; background-position:0 90%;
+    background-size:0% 2px;
+    transition:background-size .6s var(--ease);
+  }
+  .big-link:hover{ background-size:100% 2px; }
+  .social-row{ display:flex; gap:2rem; flex-wrap:wrap; justify-content:center; }
+  .social-row a{
+    font-family:var(--font-mono); font-size:.8rem; text-transform:uppercase;
+    letter-spacing:.07em; color:var(--ink-55); text-decoration:none; position:relative;
+    transition:color .4s var(--ease);
+  }
+  .social-row a::after{
+    content:''; position:absolute; left:0; bottom:-5px; width:0; height:1px; background:var(--ink);
+    transition:width .45s var(--ease);
+  }
+  .social-row a:hover{ color:var(--ink); }
+  .social-row a:hover::after{ width:100%; }
+
+  /* ============================================================
+     FOOTER
+     ============================================================ */
+  .site-footer{ border-top:1px solid var(--line); padding:2rem 0; }
+  .footer-inner{
+    display:flex; align-items:center; justify-content:space-between; flex-wrap:wrap; gap:1rem;
+    font-family:var(--font-mono); font-size:.76rem; color:var(--ink-55);
+  }
+  .back-top{ text-decoration:none; color:inherit; transition:color .3s var(--ease); }
+  .back-top:hover{ color:var(--ink); }
+</style>
+</head>
+<body>
+
+  <div class="grain" aria-hidden="true"></div>
+
+  <!-- ============================================================
+       NAV
+       ============================================================ -->
+  <header class="nav-wrap">
+    <nav class="nav-pill" id="navPill">
+      <a href="#top" class="nav-mark" aria-label="Kiran Vale — home">KV</a>
+      <div class="nav-links">
+        <a href="#work">Work</a>
+        <a href="#services">Services</a>
+        <a href="#experience">Experience</a>
+        <a href="#contact">Contact</a>
+      </div>
+      <a href="#contact" class="nav-cta">Say hello <span class="arrow">↗</span></a>
+      <button class="nav-burger" id="navBurger" aria-label="Open menu" aria-expanded="false">
+        <span></span><span></span>
+      </button>
+    </nav>
+  </header>
+
+  <div class="menu-overlay" id="menuOverlay">
+    <button class="menu-close" id="menuClose">Close ✕</button>
+    <nav class="menu-links">
+      <a href="#work">Work</a>
+      <a href="#services">Services</a>
+      <a href="#experience">Experience</a>
+      <a href="#contact">Contact</a>
+    </nav>
+    <p class="menu-foot">hello@kiranvale.com</p>
+  </div>
+
+  <main id="top">
+
+    <!-- ============================================================
+         HERO
+         ============================================================ -->
+    <section class="hero" id="hero">
+      <span class="bg-word" style="top:9%; left:-4%; transform:rotate(-5deg);">INDEX</span>
+
+      <div class="hero-inner">
+        <p class="eyebrow reveal in" style="--i:0">Portfolio — 2026 / Design Engineer</p>
+
+        <div class="hero-type">
+          <h1 class="hero-line outline reveal in" style="--i:1">Kiran</h1>
+
+          <div class="portrait-wrap reveal in" style="--i:2">
+            <div class="portrait-cutout">
+              <!-- Placeholder portrait mark — replace with your own photo, see CSS note above .portrait-photo -->
+              <svg class="portrait-mark" viewBox="0 0 200 240" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <circle cx="100" cy="82" r="43" stroke="currentColor" stroke-width="1.2"/>
+                <path d="M28 232C28 158 58 128 100 128C142 128 172 158 172 232" stroke="currentColor" stroke-width="1.2"/>
+              </svg>
+            </div>
+            <p class="fig-caption">Fig. 01 — Portrait</p>
+          </div>
+
+          <h1 class="hero-line fill reveal in" style="--i:3">Vale</h1>
+        </div>
+
+        <p class="hero-sub reveal in" style="--i:4">
+          A design engineer building considered products — where systems, brand and interaction meet.
+          Currently shaping tools at Vantage Labs.
+        </p>
+
+        <div class="hero-meta reveal in" style="--i:5">
+          <span>Based in Copenhagen, DK</span>
+          <span class="dot">•</span>
+          <span>Available from Sept 2026</span>
+        </div>
+      </div>
+
+      <a href="#statement" class="scroll-cue" aria-label="Scroll to next section"><span></span></a>
+    </section>
+
+    <!-- ============================================================
+         STATEMENT / FOCUS
+         ============================================================ -->
+    <section class="statement" id="statement">
+      <span class="bg-word" style="top:6%; right:-6%; transform:rotate(4deg);">FOCUS</span>
+      <div class="section-inner statement-grid">
+        <p class="statement-text reveal" style="--i:0">
+          I believe good design is mostly invisible — it removes friction until only the idea is left.
+          My practice sits between product design and front-end engineering, building interfaces
+          that feel inevitable rather than decorated.
+        </p>
+        <ul class="focus-list reveal" style="--i:2">
+          <li>Product Design</li>
+          <li>Brand &amp; Identity</li>
+          <li>Design Systems</li>
+          <li>Motion &amp; Prototyping</li>
+        </ul>
+      </div>
+    </section>
+
+    <!-- ============================================================
+         SELECTED WORK
+         ============================================================ -->
+    <section class="work" id="work">
+      <span class="bg-word" style="top:2%; left:-3%;">WORK</span>
+      <div class="section-inner">
+        <div class="section-head">
+          <p class="eyebrow reveal" style="--i:0">Selected Work</p>
+          <h2 class="section-title reveal" style="--i:1">A few projects,<br>chosen carefully.</h2>
+        </div>
+
+        <div class="work-grid">
+          <article class="work-card reveal" style="--i:0">
+            <div class="media"><span class="index">01</span></div>
+            <div class="work-meta">
+              <h3>Solace</h3>
+              <p class="tag">Wellness App — Product Design, 2025</p>
+              <p class="desc">A calmer daily check-in flow for a mental wellness app, rebuilt around a single guided ritual.</p>
+            </div>
+          </article>
+
+          <article class="work-card reveal" style="--i:1">
+            <div class="media"><span class="index">02</span></div>
+            <div class="work-meta">
+              <h3>Northline</h3>
+              <p class="tag">Fintech Rebrand — Brand &amp; Identity, 2024</p>
+              <p class="desc">A full identity and product rebrand for a business banking platform, from wordmark to statements UI.</p>
+            </div>
+          </article>
+
+          <article class="work-card reveal" style="--i:2">
+            <div class="media"><span class="index">03</span></div>
+            <div class="work-meta">
+              <h3>Fauna</h3>
+              <p class="tag">Commerce Platform — Design Engineering, 2024</p>
+              <p class="desc">Design and front-end build for a headless commerce storefront, shipped directly to production.</p>
+            </div>
+          </article>
+
+          <article class="work-card reveal" style="--i:3">
+            <div class="media"><span class="index">04</span></div>
+            <div class="work-meta">
+              <h3>Continuum</h3>
+              <p class="tag">Design System — Systems &amp; Tooling, 2023</p>
+              <p class="desc">A token-based component library used across four product teams, documented and versioned.</p>
+            </div>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============================================================
+         SERVICES — accordion
+         ============================================================ -->
+    <section class="services" id="services">
+      <span class="bg-word" style="top:4%; right:-5%;">SERVICES</span>
+      <div class="section-inner">
+        <div class="section-head">
+          <p class="eyebrow reveal" style="--i:0">What I Do</p>
+          <h2 class="section-title reveal" style="--i:1">Services, in four parts.</h2>
+        </div>
+
+        <div class="accordion">
+          <div class="accordion-item open reveal" style="--i:0">
+            <button class="accordion-header" aria-expanded="true" aria-controls="panel-1">
+              <span class="acc-index">01</span>
+              <span class="acc-title">Product Design</span>
+              <span class="acc-icon"></span>
+            </button>
+            <div class="accordion-panel" id="panel-1">
+              <div class="accordion-panel-inner">
+                <p>End-to-end product design — from early research and flows to high-fidelity
+                  interface design and interaction detail. I work close to engineering so what
+                  ships matches what was designed.</p>
+                <div class="tag-row">
+                  <span>Research</span><span>UX/UI</span><span>Prototyping</span><span>Design QA</span>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="accordion-item reveal" style="--i:1">
+            <button class="accordion-header" aria-expanded="false" aria-controls="panel-2">
+              <span class="acc-index">02</span>
+              <span class="acc-title">Brand &amp; Identity</span>
+              <span class="acc-icon"></span>
+            </button>
+            <div class="accordion-panel" id="panel-2">
+              <div class="accordion-panel-inner">
+                <p>Naming, visual identity and art direction for products that need a clear
+                  point of view — logotype, type system, colour and voice, built to scale
+                  across a product and its marketing.</p>
+                <div class="tag-row">
+                  <span>Identity</span><span>Typography</span><span>Art Direction</span>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="accordion-item reveal" style="--i:2">
+            <button class="accordion-header" aria-expanded="false" aria-controls="panel-3">
+              <span class="acc-index">03</span>
+              <span class="acc-title">Design Systems</span>
+              <span class="acc-icon"></span>
+            </button>
+            <div class="accordion-panel" id="panel-3">
+              <div class="accordion-panel-inner">
+                <p>Component libraries and design tokens that keep a growing product
+                  consistent — documented, versioned, and built to be used by designers
+                  and engineers without translation loss.</p>
+                <div class="tag-row">
+                  <span>Tokens</span><span>Components</span><span>Documentation</span>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="accordion-item reveal" style="--i:3">
+            <button class="accordion-header" aria-expanded="false" aria-controls="panel-4">
+              <span class="acc-index">04</span>
+              <span class="acc-title">Motion &amp; Prototyping</span>
+              <span class="acc-icon"></span>
+            </button>
+            <div class="accordion-panel" id="panel-4">
+              <div class="accordion-panel-inner">
+                <p>Interface motion, micro-interactions and high-fidelity prototypes that
+                  communicate how a product should feel before a single line of production
+                  code is written.</p>
+                <div class="tag-row">
+                  <span>Motion</span><span>Interaction</span><span>Prototyping</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============================================================
+         EXPERIENCE
+         ============================================================ -->
+    <section class="experience" id="experience">
+      <span class="bg-word" style="top:3%; left:-4%;">EXPERIENCE</span>
+      <div class="section-inner">
+        <div class="section-head">
+          <p class="eyebrow reveal" style="--i:0">Experience</p>
+          <h2 class="section-title reveal" style="--i:1">Where I've worked.</h2>
+        </div>
+
+        <div class="exp-list">
+          <div class="exp-row reveal" style="--i:0">
+            <div class="exp-main"><h3>Senior Design Engineer</h3><p>Vantage Labs</p></div>
+            <p class="exp-desc">Leading design engineering for the core platform team, shaping the design system and shipping interface code directly alongside product design.</p>
+            <span class="exp-date">2023 — Present</span>
+          </div>
+          <div class="exp-row reveal" style="--i:1">
+            <div class="exp-main"><h3>Product Designer</h3><p>Fielo</p></div>
+            <p class="exp-desc">Owned end-to-end design for onboarding and billing, working closely with three engineering pods.</p>
+            <span class="exp-date">2021 — 2023</span>
+          </div>
+          <div class="exp-row reveal" style="--i:2">
+            <div class="exp-main"><h3>Designer</h3><p>Studio Nine</p></div>
+            <p class="exp-desc">Brand and product design for early-stage startups across fintech, health and climate.</p>
+            <span class="exp-date">2019 — 2021</span>
+          </div>
+          <div class="exp-row reveal" style="--i:3">
+            <div class="exp-main"><h3>Freelance Designer</h3><p>Independent</p></div>
+            <p class="exp-desc">Identity and web design for small studios, musicians and independent brands.</p>
+            <span class="exp-date">2017 — 2019</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============================================================
+         CONTACT
+         ============================================================ -->
+    <section class="contact" id="contact">
+      <span class="bg-word" style="bottom:0%; left:50%; transform:translateX(-50%);">CONTACT</span>
+      <div class="section-inner contact-inner">
+        <p class="eyebrow reveal" style="--i:0">Contact</p>
+        <h2 class="contact-title reveal" style="--i:1">Let's build something<br>considered.</h2>
+        <a href="mailto:hello@kiranvale.com" class="big-link reveal" style="--i:2">hello@kiranvale.com</a>
+        <div class="social-row reveal" style="--i:3">
+          <a href="#">LinkedIn</a>
+          <a href="#">Dribbble</a>
+          <a href="#">Instagram</a>
+          <a href="#">X</a>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <footer class="site-footer">
+    <div class="section-inner footer-inner">
+      <p>© 2026 Kiran Vale. Built with care.</p>
+      <a href="#top" class="back-top">Back to top ↑</a>
+    </div>
+  </footer>
+
+  <script>
+  (function(){
+    var reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+    /* ---- scroll-triggered reveal for everything below the hero ---- */
+    var revealEls = document.querySelectorAll('.reveal:not(.in)');
+    if('IntersectionObserver' in window && !reduceMotion){
+      var io = new IntersectionObserver(function(entries){
+        entries.forEach(function(entry){
+          if(entry.isIntersecting){
+            entry.target.classList.add('in');
+            io.unobserve(entry.target);
+          }
+        });
+      }, { threshold:.15, rootMargin:'0px 0px -8% 0px' });
+      revealEls.forEach(function(el){ io.observe(el); });
+    } else {
+      revealEls.forEach(function(el){ el.classList.add('in'); });
+    }
+
+    /* ---- gentle parallax on background words ---- */
+    if(!reduceMotion){
+      var bgWords = document.querySelectorAll('.bg-word');
+      var ticking = false;
+      window.addEventListener('scroll', function(){
+        if(!ticking){
+          window.requestAnimationFrame(function(){
+            var y = window.scrollY;
+            bgWords.forEach(function(w, i){
+              var speed = 0.04 + (i % 3) * 0.015;
+              var existing = w.style.transform || '';
+              var base = existing.replace(/translateY\([^)]*\)\s*/,'');
+              w.style.transform = 'translateY(' + (y * speed * 0.15) + 'px) ' + base;
+            });
+            ticking = false;
+          });
+          ticking = true;
+        }
+      }, { passive:true });
+    }
+
+    /* ---- floating nav shrink / solidify on scroll ---- */
+    var navPill = document.getElementById('navPill');
+    window.addEventListener('scroll', function(){
+      navPill.classList.toggle('scrolled', window.scrollY > 40);
+    }, { passive:true });
+
+    /* ---- accordion ---- */
+    document.querySelectorAll('.accordion-item').forEach(function(item){
+      var header = item.querySelector('.accordion-header');
+      var panel = item.querySelector('.accordion-panel');
+
+      if(item.classList.contains('open')){
+        // set initial height after fonts/layout settle
+        window.requestAnimationFrame(function(){
+          panel.style.maxHeight = panel.scrollHeight + 'px';
+        });
+      }
+
+      header.addEventListener('click', function(){
+        var isOpen = item.classList.contains('open');
+
+        document.querySelectorAll('.accordion-item.open').forEach(function(other){
+          if(other !== item){
+            other.classList.remove('open');
+            other.querySelector('.accordion-header').setAttribute('aria-expanded','false');
+            other.querySelector('.accordion-panel').style.maxHeight = null;
+          }
+        });
+
+        item.classList.toggle('open', !isOpen);
+        header.setAttribute('aria-expanded', String(!isOpen));
+        panel.style.maxHeight = !isOpen ? panel.scrollHeight + 'px' : null;
+      });
+    });
+
+    window.addEventListener('resize', function(){
+      document.querySelectorAll('.accordion-item.open .accordion-panel').forEach(function(panel){
+        panel.style.maxHeight = panel.scrollHeight + 'px';
+      });
+    });
+
+    /* ---- mobile menu ---- */
+    var burger = document.getElementById('navBurger');
+    var overlay = document.getElementById('menuOverlay');
+    var closeBtn = document.getElementById('menuClose');
+
+    function openMenu(){
+      overlay.classList.add('open');
+      burger.classList.add('open');
+      burger.setAttribute('aria-expanded','true');
+      document.documentElement.style.overflow = 'hidden';
+    }
+    function closeMenu(){
+      overlay.classList.remove('open');
+      burger.classList.remove('open');
+      burger.setAttribute('aria-expanded','false');
+      document.documentElement.style.overflow = '';
+    }
+    burger.addEventListener('click', function(){
+      overlay.classList.contains('open') ? closeMenu() : openMenu();
+    });
+    closeBtn.addEventListener('click', closeMenu);
+    overlay.querySelectorAll('a').forEach(function(a){
+      a.addEventListener('click', closeMenu);
+    });
+
+  })();
+  </script>
+
+</body>
+</html>

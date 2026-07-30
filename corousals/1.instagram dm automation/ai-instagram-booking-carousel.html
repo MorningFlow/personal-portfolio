@@ -1,0 +1,658 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AI Instagram Appointment Booking Agent — Carousel</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=Space+Grotesk:wght@500;700&family=Inter:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --paper:#F4F3EF;
+    --paper-soft:#EAE8E2;
+    --ink:#141310;
+    --ink-70:rgba(20,19,16,0.7);
+    --ink-40:rgba(20,19,16,0.4);
+    --ink-30:rgba(20,19,16,0.3);
+    --line:rgba(20,19,16,0.12);
+    --ease:cubic-bezier(0.22,1,0.36,1);
+    --accent:#c49a6c;
+    --accent-soft:#e8d5c0;
+    --accent-deep:#d4b896;
+  }
+  *{box-sizing:border-box;}
+  body{
+    margin:0;
+    background:#dedad2;
+    font-family:'Inter',sans-serif;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    min-height:100vh;
+    padding:32px 16px;
+  }
+  .stage{
+    width:100%;
+    max-width:920px;
+  }
+  .carousel{
+    position:relative;
+    width:100%;
+    aspect-ratio:4/3;
+    background:var(--paper);
+    overflow:hidden;
+    border:1px solid var(--line);
+  }
+  .carousel::after{
+    content:"";
+    position:absolute;
+    inset:0;
+    z-index:5;
+    pointer-events:none;
+    opacity:0.05;
+    mix-blend-mode:multiply;
+    background-image:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='140' height='140'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2' stitchTiles='stitch'/></filter><rect width='100%25' height='100%25' filter='url(%23n)'/></svg>");
+    background-size:140px 140px;
+  }
+  .track{
+    position:relative;
+    width:100%;
+    height:100%;
+  }
+  .slide{
+    position:absolute;
+    inset:0;
+    display:flex;
+    flex-direction:column;
+    padding:clamp(20px,3.4vw,36px);
+    transform:translateX(100%);
+    will-change:transform;
+    z-index:1;
+  }
+  .slide.is-current{ transform:translateX(0%); z-index:3; }
+  .slide.is-prev-side{ transform:translateX(-100%); }
+  .slide.transitioning{ transition:transform 480ms var(--ease); }
+
+  .bg-paper{ background:var(--paper); }
+  .bg-paper-soft{ background:var(--paper-soft); }
+  .bg-accent-wash{ background:linear-gradient(160deg, var(--paper) 60%, var(--accent-soft) 100%); }
+
+  .topbar{
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    flex-shrink:0;
+  }
+  .eyebrow, .counter{
+    font-family:'IBM Plex Mono',monospace;
+    font-size:0.7rem;
+    text-transform:uppercase;
+    letter-spacing:0.1em;
+    color:var(--ink-40);
+  }
+
+  .body-zone{
+    flex:1;
+    display:flex;
+    min-height:0;
+  }
+
+  /* ---- stacked (vertical) layout: headline-forward slides ---- */
+  .layout-stack{
+    flex-direction:column;
+    justify-content:center;
+    gap:clamp(10px,2vw,18px);
+    padding-top:clamp(6px,1.5vw,14px);
+  }
+  .layout-stack .headline{
+    font-family:'Space Grotesk',sans-serif;
+    font-weight:700;
+    font-size:clamp(1.5rem,3.6vw,2.6rem);
+    line-height:1.14;
+    color:var(--ink);
+    max-width:88%;
+  }
+  .layout-stack .sub{
+    font-family:'Inter',sans-serif;
+    font-size:0.95rem;
+    line-height:1.7;
+    color:var(--ink-70);
+    max-width:62%;
+  }
+
+  /* ---- split (image-docked) layout ---- */
+  .layout-split{
+    gap:clamp(16px,3vw,32px);
+  }
+  .layout-split .text-col{
+    display:flex;
+    flex-direction:column;
+    justify-content:center;
+    gap:14px;
+  }
+  .layout-split .visual-col{
+    position:relative;
+    overflow:hidden;
+    flex-shrink:0;
+  }
+  .layout-split .visual-col img{
+    width:100%;
+    height:100%;
+    object-fit:cover;
+    display:block;
+  }
+  .split-text-first .text-col{ flex:1 1 56%; }
+  .split-text-first .visual-col{ flex:1 1 44%; }
+  .split-image-first .visual-col{ flex:1 1 42%; order:-1; }
+  .split-image-first .text-col{ flex:1 1 58%; }
+
+  .headline-sm{
+    font-family:'Space Grotesk',sans-serif;
+    font-weight:700;
+    font-size:clamp(1.15rem,2.5vw,1.65rem);
+    line-height:1.2;
+    color:var(--ink);
+  }
+  .sub-sm{
+    font-family:'Inter',sans-serif;
+    font-size:0.88rem;
+    line-height:1.65;
+    color:var(--ink-70);
+    max-width:92%;
+  }
+
+  /* ---- list layout (What I Built) ---- */
+  .stack-list{
+    list-style:none;
+    margin:0;
+    padding:0;
+    display:flex;
+    flex-direction:column;
+    gap:6px;
+  }
+  .stack-list li{
+    font-family:'Space Grotesk',sans-serif;
+    font-weight:700;
+    font-size:clamp(0.95rem,1.9vw,1.3rem);
+    color:var(--ink);
+    padding-bottom:6px;
+    border-bottom:1px solid var(--line);
+  }
+  .stack-list li:last-child{ border-bottom:none; }
+
+  /* ---- sequence layout (Hard Part) ---- */
+  .layout-sequence{
+    flex-direction:column;
+    justify-content:center;
+    gap:clamp(18px,3vw,30px);
+  }
+  .sequence-row{
+    display:flex;
+    justify-content:space-between;
+    position:relative;
+    padding-top:6px;
+  }
+  .sequence-row::before{
+    content:"";
+    position:absolute;
+    top:34%;
+    left:0;
+    right:0;
+    height:1px;
+    background:var(--line);
+  }
+  .seq-step{
+    position:relative;
+    z-index:1;
+    display:flex;
+    flex-direction:column;
+    align-items:flex-start;
+    gap:8px;
+    background:inherit;
+    padding-right:8px;
+  }
+  .seq-num{
+    font-family:'Space Grotesk',sans-serif;
+    font-weight:700;
+    font-size:clamp(1.4rem,3.4vw,2.3rem);
+    color:var(--ink);
+    background:inherit;
+  }
+  .seq-label{
+    font-family:'IBM Plex Mono',monospace;
+    font-size:0.62rem;
+    text-transform:uppercase;
+    letter-spacing:0.08em;
+    color:var(--ink-40);
+  }
+  .seq-quote{
+    font-family:'Space Grotesk',sans-serif;
+    font-weight:500;
+    font-size:clamp(0.95rem,2vw,1.2rem);
+    color:var(--ink-70);
+    max-width:80%;
+  }
+
+  /* ---- outcome layout (top image, bottom content) ---- */
+  .layout-outcome{
+    flex-direction:column;
+    gap:clamp(12px,2.4vw,20px);
+  }
+  .outcome-visual{
+    flex:1 1 54%;
+    min-height:0;
+    overflow:hidden;
+    position:relative;
+  }
+  .outcome-visual img{
+    width:100%;
+    height:100%;
+    object-fit:cover;
+    display:block;
+  }
+  .outcome-content{
+    flex:1 1 46%;
+    display:flex;
+    flex-direction:column;
+    justify-content:center;
+    gap:8px;
+  }
+
+  .tag-pill{
+    display:inline-flex;
+    align-self:flex-start;
+    font-family:'IBM Plex Mono',monospace;
+    font-size:0.65rem;
+    letter-spacing:0.08em;
+    text-transform:uppercase;
+    color:var(--ink);
+    background:var(--accent-soft);
+    padding:6px 12px;
+    margin-top:4px;
+  }
+
+  /* ---- CTA layout (Try It) ---- */
+  .layout-cta{
+    flex-direction:column;
+    justify-content:center;
+    gap:14px;
+  }
+  .cta-footer{
+    display:flex;
+    align-items:center;
+    gap:14px;
+    margin-top:6px;
+  }
+  .cta-thumb{
+    width:52px;
+    height:52px;
+    flex-shrink:0;
+    overflow:hidden;
+    border:1px solid var(--line);
+  }
+  .cta-thumb img{ width:100%; height:100%; object-fit:cover; display:block; }
+  .link-chip{
+    font-family:'IBM Plex Mono',monospace;
+    font-size:0.78rem;
+    letter-spacing:0.02em;
+    color:var(--ink);
+    background:var(--accent-soft);
+    padding:8px 14px;
+    text-decoration:none;
+    display:inline-block;
+  }
+  .cta-caption{
+    font-family:'IBM Plex Mono',monospace;
+    font-size:0.62rem;
+    letter-spacing:0.04em;
+    color:var(--ink-40);
+    margin-top:2px;
+  }
+
+  /* ---- controls ---- */
+  .controls-row{
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    flex-shrink:0;
+    padding-top:10px;
+  }
+  .indicators{
+    display:flex;
+    gap:8px;
+    align-items:center;
+  }
+  .indicator{
+    appearance:none;
+    border:none;
+    background:none;
+    padding:6px 2px;
+    cursor:pointer;
+    display:flex;
+    align-items:center;
+  }
+  .indicator .bar{
+    width:24px;
+    height:2px;
+    background:var(--ink-30);
+    transition:width 320ms var(--ease), background 320ms var(--ease);
+  }
+  .indicator.active .bar{
+    width:48px;
+    background:var(--ink);
+  }
+  .arrows{
+    display:flex;
+    gap:4px;
+  }
+  .arrow-btn{
+    width:32px;
+    height:32px;
+    border:1px solid transparent;
+    background:none;
+    font-family:'IBM Plex Mono',monospace;
+    font-size:0.8rem;
+    color:var(--ink);
+    cursor:pointer;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    transition:border-color 200ms var(--ease);
+  }
+  .arrow-btn:hover{ border-color:var(--line); }
+  .arrow-btn:focus-visible{ outline:2px solid var(--accent); outline-offset:2px; }
+  .indicator:focus-visible{ outline:2px solid var(--accent); outline-offset:2px; }
+
+  @media (prefers-reduced-motion: reduce){
+    .slide.transitioning{ transition:none; }
+  }
+
+  @media (max-width:560px){
+    .layout-split{ flex-direction:column; }
+    .split-text-first .visual-col,
+    .split-image-first .visual-col{ flex:1 1 40%; order:0; }
+    .split-image-first .text-col{ order:1; }
+    .layout-stack .headline, .layout-stack .sub{ max-width:100%; }
+    .sub-sm{ max-width:100%; }
+  }
+
+  /* ---- Per-slide image frame overrides ---- */
+
+  /* Shared frame polish: all visual columns get radius + shadow */
+  .layout-split .visual-col{
+    border-radius:10px;
+    box-shadow:0 4px 24px rgba(20,19,16,0.10), 0 1px 6px rgba(20,19,16,0.06);
+    overflow:hidden;
+  }
+
+  /* Slide 02 — inbox.png: tall portrait mobile, use contain */
+  [data-index="1"] .visual-col{
+    background:var(--paper-soft);
+    flex:1 1 38%;
+  }
+  [data-index="1"] .visual-col img{
+    object-fit:contain;
+    object-position:top center;
+  }
+  [data-index="1"] .text-col{ flex:1 1 62%; }
+
+  /* Slide 04 — dm_conversation.png: very tall portrait, use contain */
+  [data-index="3"] .visual-col{
+    background:var(--paper);
+    flex:1 1 36%;
+  }
+  [data-index="3"] .visual-col img{
+    object-fit:contain;
+    object-position:top center;
+  }
+  [data-index="3"] .text-col{ flex:1 1 64%; }
+
+  /* Slide 06 — calendar.png: landscape, keep cover but pin to top */
+  .outcome-visual{
+    border-radius:10px;
+    box-shadow:0 4px 24px rgba(20,19,16,0.10), 0 1px 6px rgba(20,19,16,0.06);
+    overflow:hidden;
+  }
+  [data-index="5"] .outcome-visual img{
+    object-position:top center;
+  }
+
+  /* Slide 07 — profile.png: CTA thumb gets rounded corners */
+  .cta-thumb{
+    border-radius:8px;
+  }
+</style>
+</head>
+<body>
+
+<div class="stage">
+  <div class="carousel" id="carousel" tabindex="0" aria-roledescription="carousel" aria-label="AI Instagram Appointment Booking Agent case study">
+    <div class="track" id="track">
+
+      <!-- 01 Cover -->
+      <div class="slide bg-accent-wash" data-index="0">
+        <div class="topbar">
+          <span class="eyebrow">Project: Automation</span>
+          <span class="counter">01 / 07</span>
+        </div>
+        <div class="body-zone layout-stack">
+          <div class="headline">I built an Instagram inbox that books its own appointments.</div>
+          <div class="sub">AI Appointment Booking Agent. Instagram DM automation.</div>
+        </div>
+      </div>
+
+      <!-- 02 The Problem -->
+      <div class="slide bg-paper-soft" data-index="1">
+        <div class="topbar">
+          <span class="eyebrow">The Problem</span>
+          <span class="counter">02 / 07</span>
+        </div>
+        <div class="body-zone layout-split split-text-first">
+          <div class="text-col">
+            <div class="headline-sm">Every DM answered by hand. Every reply a delay.</div>
+            <div class="sub-sm">Manual replies to booking inquiries were consuming hours daily and slowing response time for a service business fielding customers through Instagram.</div>
+          </div>
+          <div class="visual-col">
+            <img src="assets/inbox.png" alt="Crowded Instagram DM inbox with unanswered booking inquiries">
+          </div>
+        </div>
+      </div>
+
+      <!-- 03 The Solution -->
+      <div class="slide bg-paper" data-index="2">
+        <div class="topbar">
+          <span class="eyebrow">The Approach</span>
+          <span class="counter">03 / 07</span>
+        </div>
+        <div class="body-zone layout-stack">
+          <div class="headline">An AI trained to sound like a person, not a bot.</div>
+          <div class="sub">Personality modeled from real conversation history, so every reply matched the owner's actual tone.</div>
+        </div>
+      </div>
+
+      <!-- 04 What I Built -->
+      <div class="slide bg-paper-soft" data-index="3">
+        <div class="topbar">
+          <span class="eyebrow">System</span>
+          <span class="counter">04 / 07</span>
+        </div>
+        <div class="body-zone layout-split split-image-first">
+          <div class="visual-col">
+            <img src="assets/dm_conversation.png" alt="Instagram DM conversation showing the AI agent booking a balayage and haircut appointment end to end">
+          </div>
+          <div class="text-col">
+            <ul class="stack-list">
+              <li>DM automation</li>
+              <li>Conversational AI</li>
+              <li>Personality modeling</li>
+              <li>Calendar booking</li>
+              <li>FAQ handling</li>
+            </ul>
+            <div class="sub-sm">Instagram API, n8n, and an LLM, wired end to end.</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- 05 The Hard Part -->
+      <div class="slide bg-paper" data-index="4">
+        <div class="topbar">
+          <span class="eyebrow">The Challenge</span>
+          <span class="counter">05 / 07</span>
+        </div>
+        <div class="body-zone layout-sequence">
+          <div class="sequence-row">
+            <div class="seq-step"><span class="seq-num">1</span><span class="seq-label">Collect</span></div>
+            <div class="seq-step"><span class="seq-num">2</span><span class="seq-label">Analyze</span></div>
+            <div class="seq-step"><span class="seq-num">3</span><span class="seq-label">Profile</span></div>
+            <div class="seq-step"><span class="seq-num">4</span><span class="seq-label">Engineer</span></div>
+            <div class="seq-step"><span class="seq-num">5</span><span class="seq-label">Refine</span></div>
+          </div>
+          <div class="seq-quote">"Sounding human took five iterations, not one prompt."</div>
+        </div>
+      </div>
+
+      <!-- 06 Outcome -->
+      <div class="slide bg-accent-wash" data-index="5">
+        <div class="topbar">
+          <span class="eyebrow">Result</span>
+          <span class="counter">06 / 07</span>
+        </div>
+        <div class="body-zone layout-outcome">
+          <div class="outcome-visual">
+            <img src="assets/calendar.png" alt="Staff booking calendar showing appointments automatically filled in across multiple staff columns">
+          </div>
+          <div class="outcome-content">
+            <div class="headline-sm">No more manual replies. The inbox runs itself.</div>
+            <div class="sub-sm">Appointments book themselves. The voice stays personal.</div>
+            <span class="tag-pill">Live in production</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- 07 Try It -->
+      <div class="slide bg-paper-soft" data-index="6">
+        <div class="topbar">
+          <span class="eyebrow">Live Demo</span>
+          <span class="counter">07 / 07</span>
+        </div>
+        <div class="body-zone layout-cta">
+          <div class="headline-sm">Message it yourself.</div>
+          <div class="sub-sm">A live version of this agent runs on Instagram. Send "hi" to start the conversation.</div>
+          <div class="cta-footer">
+            <div class="cta-thumb">
+              <img src="assets/profile.png" alt="Mytaskengine Instagram profile card">
+            </div>
+            <a class="link-chip" href="https://ig.me/m/mytaskengine" target="_blank" rel="noopener">ig.me/m/mytaskengine</a>
+          </div>
+          <div class="cta-caption">Configured here as a sales assistant for demo purposes.</div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <div class="controls-row">
+    <div class="indicators" id="indicators"></div>
+    <div class="arrows">
+      <button class="arrow-btn" id="prevBtn" aria-label="Previous slide">&larr;</button>
+      <button class="arrow-btn" id="nextBtn" aria-label="Next slide">&rarr;</button>
+    </div>
+  </div>
+</div>
+
+<script>
+(function(){
+  const slides = Array.from(document.querySelectorAll('.slide'));
+  const total = slides.length;
+  const indicatorsEl = document.getElementById('indicators');
+  const carousel = document.getElementById('carousel');
+  let current = 0;
+  let animating = false;
+
+  slides.forEach((s, i) => {
+    if(i === 0){ s.classList.add('is-current'); }
+  });
+
+  for(let i=0; i<total; i++){
+    const btn = document.createElement('button');
+    btn.className = 'indicator' + (i === 0 ? ' active' : '');
+    btn.setAttribute('aria-label', 'Go to slide ' + (i+1));
+    const bar = document.createElement('span');
+    bar.className = 'bar';
+    btn.appendChild(bar);
+    btn.addEventListener('click', () => goTo(i));
+    indicatorsEl.appendChild(btn);
+  }
+  const indicatorBtns = Array.from(indicatorsEl.children);
+
+  function updateIndicators(){
+    indicatorBtns.forEach((b, i) => b.classList.toggle('active', i === current));
+  }
+
+  function goTo(target){
+    if(animating || target === current) return;
+    const direction = target > current ? 1 : -1;
+    animating = true;
+
+    const outgoing = slides[current];
+    const incoming = slides[target];
+
+    incoming.style.transform = direction === 1 ? 'translateX(100%)' : 'translateX(-100%)';
+    incoming.style.zIndex = 3;
+    outgoing.style.zIndex = 2;
+
+    void incoming.offsetWidth;
+
+    outgoing.classList.add('transitioning');
+    incoming.classList.add('transitioning');
+
+    requestAnimationFrame(() => {
+      outgoing.style.transform = direction === 1 ? 'translateX(-85%)' : 'translateX(85%)';
+      incoming.style.transform = 'translateX(0%)';
+    });
+
+    const cleanup = () => {
+      outgoing.classList.remove('transitioning','is-current');
+      incoming.classList.remove('transitioning');
+      incoming.classList.add('is-current');
+      outgoing.style.transform = direction === 1 ? 'translateX(-100%)' : 'translateX(100%)';
+      outgoing.style.zIndex = 1;
+      incoming.style.zIndex = 3;
+      current = target;
+      animating = false;
+      updateIndicators();
+      outgoing.removeEventListener('transitionend', cleanup);
+    };
+    outgoing.addEventListener('transitionend', cleanup);
+    setTimeout(() => { if(animating) cleanup(); }, 600);
+  }
+
+  document.getElementById('nextBtn').addEventListener('click', () => {
+    goTo((current + 1) % total);
+  });
+  document.getElementById('prevBtn').addEventListener('click', () => {
+    goTo((current - 1 + total) % total);
+  });
+
+  carousel.addEventListener('keydown', (e) => {
+    if(e.key === 'ArrowRight'){ goTo((current + 1) % total); }
+    if(e.key === 'ArrowLeft'){ goTo((current - 1 + total) % total); }
+  });
+
+  let touchStartX = null;
+  carousel.addEventListener('touchstart', (e) => { touchStartX = e.touches[0].clientX; }, {passive:true});
+  carousel.addEventListener('touchend', (e) => {
+    if(touchStartX === null) return;
+    const dx = e.changedTouches[0].clientX - touchStartX;
+    if(Math.abs(dx) > 40){
+      if(dx < 0){ goTo((current + 1) % total); }
+      else { goTo((current - 1 + total) % total); }
+    }
+    touchStartX = null;
+  }, {passive:true});
+})();
+</script>
+
+</body>
+</html>
