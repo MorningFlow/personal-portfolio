@@ -39,7 +39,7 @@
     .fromTo('.statement .bg-word-inner', { x: '10vw', opacity: 0 }, { x: 0, opacity: 1, ease: 'none' }, 0.4)
     .to('.focus-list',     { scale: 1, opacity: 1, ease: 'power2.out' }, 0.6);
 
-  /* Pin the wrapper stack on desktop only; allow natural scroll on mobile */
+  /* Pin the wrapper stack and scrub the timeline on desktop only */
   ScrollTrigger.matchMedia({
     "(min-width: 861px)": function() {
       ScrollTrigger.create({
@@ -49,17 +49,6 @@
         end:           '+=120%',
         pin:           true,
         scrub:         1.5,
-        invalidateOnRefresh: true,
-      });
-    },
-    "(max-width: 860px)": function() {
-      ScrollTrigger.create({
-        animation:     scatter,
-        trigger:       '.hero-statement-stack',
-        start:         'top top',
-        end:           'bottom top',
-        pin:           false,
-        scrub:         1,
         invalidateOnRefresh: true,
       });
     }
