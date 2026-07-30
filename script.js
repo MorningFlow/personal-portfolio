@@ -285,12 +285,12 @@
 
   /* ── Smooth Scroll for "RR" Logo ────────────────────────────
      Native anchor jumps to #top conflict with GSAP pin spacers.
-     We manually scroll the window to 0. */
+     We manually jump to 0 and let GSAP scrub handle the smoothing. */
   var navMark = document.querySelector('.nav-mark');
   if (navMark) {
     navMark.addEventListener('click', function(e) {
       e.preventDefault();
-      window.scrollTo({ top: 0, behavior: 'smooth' });
+      window.scrollTo(0, 0);
     });
   }
 
