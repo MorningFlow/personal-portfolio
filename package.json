@@ -1,0 +1,9 @@
+{
+  "name": "rishikesh-portfolio",
+  "version": "2.0.0",
+  "private": true,
+  "description": "Rishikesh R — AI Automation & Dev Agency Founder Portfolio",
+  "scripts": {
+    "build": "echo \"Static HTML site — no build required\""
+  }
+}
