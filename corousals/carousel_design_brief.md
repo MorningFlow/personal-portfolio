@@ -114,7 +114,7 @@ moments inside the carousel (e.g., a tag pill background, a data number colour, 
 | Card | Accent Gradient | Mono accent to pull |
 |---|---|---|
 | Card 1 (AI Instagram) | `#e8d5c0 → #d4b896` | `#c49a6c` (warm amber) |
-| Card 2 (Sahadar Shield) | `#c0cfe8 → #9db8d9` | `#6e98c8` (slate blue) |
+| Card 2 (Sahakar Shield) | `#c0cfe8 → #9db8d9` | `#6e98c8` (slate blue) |
 | Card 3 | `#c0e8cc → #96c9a5` | `#5dab78` (sage green) |
 | Card 4 | `#d4c0e8 → #b89fd4` | `#9a75c8` (muted violet) |
 

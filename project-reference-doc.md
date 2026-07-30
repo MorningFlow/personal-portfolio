@@ -122,13 +122,13 @@ Enabled the business to sell jerseys online through a dedicated digital storefro
 
 ---
 
-## 5. Sahadar Shield Membership Ecosystem
+## 5. Sahakar Shield Membership Ecosystem
 
-**Client:** Sahadar Shield
+**Client:** Sahakar Shield
 **Industry:** Healthcare / Pharmacy membership program
 
 **Background**
-Sahadar Shield runs a membership-based discount program spanning 300+ partner medical stores.
+Sahakar Shield runs a membership-based discount program spanning 300+ partner medical stores.
 
 **Problem**
 The organization needed a complete digital platform to manage members, staff, memberships, credits, and retail discounts across all partner locations.
@@ -380,7 +380,7 @@ Handles the entire lifecycle — client discussions, solution architecture, UI d
 
 **Recommended Featured Case Study Order:**
 1. AI Instagram Appointment Booking Agent — strongest AI/personality story, most relatable use case
-2. Sahadar Shield Membership Platform — largest scope, full-stack + mobile + dashboards + auth
+2. Sahakar Shield Membership Platform — largest scope, full-stack + mobile + dashboards + auth
 3. AI Customer Feedback & Google Review Automation — best business/product-thinking narrative
 4. Cold Email Infrastructure & Outreach Platform — showcases infrastructure/deliverability skill set
 

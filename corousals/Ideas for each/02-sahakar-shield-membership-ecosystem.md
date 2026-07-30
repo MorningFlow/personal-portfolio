@@ -1,4 +1,4 @@
-# Carousel Ideation — Sahadar Shield Membership Ecosystem
+# Carousel Ideation — Sahakar Shield Membership Ecosystem
 
 **Card / Accent:** Card 2 — slate blue (`#6e98c8`)
 **Slide Count:** 7
@@ -11,7 +11,7 @@
 ### 01 — Cover
 - Eyebrow: `PROJECT: ECOSYSTEM`
 - Dominant (headline): *"I built the membership system behind 300+ pharmacies."*
-- Subordinate: *Sahadar Shield. Membership, credits, and discounts, unified across one ecosystem.*
+- Subordinate: *Sahakar Shield. Membership, credits, and discounts, unified across one ecosystem.*
 
 ### 02 — The Scale
 - Eyebrow: `THE SCALE`
