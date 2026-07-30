@@ -448,7 +448,7 @@ section { position: relative; overflow: hidden; }
   .hero {
     padding-top: 4.8rem;
     padding-bottom: 1.5rem;
-    min-height: auto;
+    min-height: 100svh;
   }
   .hero-name-row { padding: 0 1.25rem; }
   .hero-fname, .hero-lname {
