@@ -444,10 +444,6 @@ section { position: relative; overflow: hidden; }
 
 /* Mobile hero */
 @media (max-width: 860px) {
-  /* Fix 5: Break grid stack — hero & statement flow vertically */
-  .hero-statement-stack {
-    display: block;
-  }
 
   .hero {
     padding-top: 4.8rem;
@@ -491,10 +487,9 @@ section { position: relative; overflow: hidden; }
     margin-bottom: 0.6rem;
   }
   .hero-socials {
-    flex-direction: row;
-    flex-wrap: wrap;
-    align-items: center;
-    justify-content: center;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    width: 100%;
     gap: 0.5rem;
     margin-top: 0.25rem;
     z-index: 20;
@@ -504,23 +499,13 @@ section { position: relative; overflow: hidden; }
     min-height: 40px;
     padding: 0.5rem 0.95rem;
     font-size: 0.82rem;
-    width: auto;
+    width: 100%;
+    justify-content: center;
   }
   .hero-socials a:hover { transform: none; }
   .scroll-cue { display: none; }
 
-  /* Statement section gets its own height in the flow */
-  .statement {
-    padding: 5rem 0;
-  }
-  .statement-text,
-  .focus-list,
-  .statement .bg-word-inner {
-    opacity: 1 !important;
-    transform: none !important;
-  }
-
-  /* CONTACT word: centred and fully visible on mobile */
+  /* CONTACT word: perfectly centered vertically on mobile */
   .contact {
     padding: 6rem 0 5rem;
   }
@@ -1027,12 +1012,16 @@ section { position: relative; overflow: hidden; }
   .wc-split .wc-text-col {
     font-size: 0.82rem;
   }
-  /* Fix 7: Normalize carousel image columns — override per-slide specificity */
+  /* Normalize carousel image columns — override per-slide specificity */
   .wc-split .wc-vis-col {
     flex: 1 1 44% !important;
     height: auto !important;
     align-self: stretch !important;
     max-height: 240px;
+  }
+  /* Center all carousel images inside their containers on mobile */
+  .wc-vis-col img, .wc-outcome-vis img {
+    object-position: center center !important;
   }
   .wc-stack .wc-sub { max-width: 100%; }
   .wc-big-num { font-size: clamp(3rem, 16vw, 5rem); }
