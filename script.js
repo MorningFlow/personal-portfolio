@@ -124,7 +124,7 @@
       scrollTrigger: {
         trigger: '.site-footer',
         start: 'top bottom',
-        end: 'bottom bottom',
+        end: '80% bottom',
         scrub: 2.5
       },
       y: '10%',
